@@ -5,4 +5,4 @@ Smart Firefighter Support System - Senior Design 2019
 This repository is the official GitHub page of the **Smart Firefighter Support System** sponsored by Texas State and the San Marcos Fire Department.
 
 ## What's in it?
-The SFSS [https://git.txstate.edu/raw124/SFSS] will contain all code used in the development of the SFSS.
+The SFSS git pages [https://git.txstate.edu/raw124/SFSS] [https://github.com/sfss-rw/sfss/] will contain all code used in the development of the SFSS.
