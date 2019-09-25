@@ -8,7 +8,7 @@
 # Project: 			c:\Users\wells.robert\Google Drive\School\_2019 Fall\Design 2\GUI
 # Created Date: 	Monday, September 16th 2019, 18:28:30 pm
 # -----
-# Last Modified: 	Monday, September 23rd 2019, 00:38:19 am
+# Last Modified: 	Wednesday, September 25th 2019, 10:18:05 am
 # Modified By: 		Robert Wells
 # -----
 # Copyright (c) 2019 SFSS
@@ -19,6 +19,8 @@
 # HISTORY:
 # Date      			By		Comments
 # ----------			---		----------------------------------------------------------
+# 2019-09-23 12:09:24	RW		finished adding orange 'getting close' led indicators to all metrics
+# 2019-09-23 11:09:64	RW		added orange 'getting close' led indicators
 # 2019-09-22 21:09:56	RW		redid comments to better outline code (use code folding if your IDE supports it)
 # 2019-09-22 19:09:76	RW		added graph buttons, combined update functions for hr/movement, added "overview" on
 #                                default tab, added frames to columns to clean up look of tab layouts, added "update
@@ -28,9 +30,6 @@
 # 2019-09-15 20:09:48	RW		updated TODO: list, added defs for raw data tables (hr/mov), loading gif, fixed
 #                                default browser in usersguide and added comments
 ###
-
-
-
 
 # ---------------------------------- imports --------------------------------- #
 
@@ -61,6 +60,9 @@ else:
     # TODO: - write function to connect to board
     # TODO: - add updating 'gif' or progress meter for connection
     # TODO: - add indicator for connection on/off
+
+# TODO: add warning gradients
+    # TODO: yellow for getting close etc
 
     # ? how do i make the GUI reload the csv data at xtimes/sec
     # ? should i add a slider to increase/decrease update freq on graphs
@@ -96,17 +98,49 @@ def hrtable1():
             sg.PopupError('Error reading file')
             pass
 
-    layout = [[sg.Table(values=data, headings=header_list, display_row_numbers=False,
-                            auto_size_columns=True, num_rows=min(25,len(data)))]]
-
-    hrwindow = sg.Window('Table', grab_anywhere=False)
-
+    hr_table_layout = [[sg.Table(values=data, headings=header_list, display_row_numbers=False, auto_size_columns=True, num_rows=min(25,len(data)))]]
+    hrwindow = sg.Window('FF1 HR Table', grab_anywhere=False)
     while True:
-        event, values = hrwindow.Layout(layout).Read()
+        event, values = hrwindow.Layout(hr_table_layout).Read()
         if event in(None, 'Exit'):
             break
-
     pass
+# def hrtable1():
+#     print('hrtable1')
+#     sg.SetOptions(auto_size_buttons=True)
+#     df = pd.read_csv('data1.csv', names = ['time', 'heartrate'], index_col=['time'])
+#     print('file read')
+#     data = df.values.tolist()
+#     header_list = df.iloc[0].tolist()
+#     data = df[1:].values.tolist()
+
+
+#     hr_table_layout = [[sg.Table(values=data, headings = header_list, display_row_numbers=False, auto_size_columns=True, num_rows=min(25,len(data)))]]
+
+#     hrtable = sg.Window('FF1 HR Table', grab_anywhere=False)
+
+#     while True:
+#         event, values = hrtable.Layout(hr_table_layout).Read()
+#         if event in(None, 'Exit'):
+#             break
+    #pass
+
+
+# def hrtable1():
+#     hr=pd.read_csv('data1.csv', names=['Time', 'HR'])
+#     if hr == None:
+#         print('error reading file')
+#         sys.exit('Error Reading File')
+#     data = []
+#     header_list = hr.iloc[0].tolist()
+#     if hr is not None:
+#         try:
+#             data = hr.values.tolist()
+#         except:
+#             sg.PopupError('Error Reading File')
+#             pass
+
+
 
 # ------------------------------ MOVEMENT TABLE ------------------------------ #
 
@@ -129,12 +163,12 @@ def movtable1():
             sg.PopupError('Error reading file')
             pass
 
-    layout = [[sg.Table(values=data, headings=header_list, display_row_numbers=False,
+    mov_table_layout = [[sg.Table(values=data, headings=header_list, display_row_numbers=False,
                             auto_size_columns=True, num_rows=min(25,len(data)))]]
 
     movwindow = sg.Window('Table', grab_anywhere=False)
     while True:
-        event, values = movwindow.Layout(layout).Read()
+        event, values = movwindow.Layout(mov_table_layout).Read()
         if event in(None, 'Exit'):
             break
     pass
@@ -451,16 +485,19 @@ def main():
             last_row_display1 = df1['heartrate'].iloc[-1]
             windowmain['_HRTEXT1_'].Update(last_row_display1)
             windowmain['_MAXHRTEXT1_'].Update(maxhr1)
-            if last_row_display1.item() > 230:
+            if last_row_display1.item() >= 230:
                 SetLED(windowmain, '_FF1HRLED_', 'red' if last_row_display1.all() > 230 else 'red')
                 SetLED(windowmain, '_TABDEFAULTFF1HRLED_', 'red' if last_row_display1.all() > 230 else 'red')
                 sg.PopupAutoClose('WARNING! HEART RATE IS HIGH!', auto_close_duration=3, non_blocking=True,
                 background_color='red',  font=('calibri', 15, 'bold'), grab_anywhere=True, keep_on_top=False)
-            elif last_row_display1.item() <=30:
-                SetLED(windowmain, '_FF1HRLED_', 'red' if last_row_display1.all() <= 30  else 'red')
-                SetLED(windowmain, '_TABDEFAULTFF1HRLED_', 'red' if last_row_display1.all() <= 30 else 'red')
+            elif last_row_display1.item() <=50:
+                SetLED(windowmain, '_FF1HRLED_', 'red' if last_row_display1.all() <= 50  else 'red')
+                SetLED(windowmain, '_TABDEFAULTFF1HRLED_', 'red' if last_row_display1.all() <= 50 else 'red')
                 sg.PopupAutoClose('WARNING! HEART RATE IS LOW!', auto_close_duration=3, non_blocking=True,
                 background_color='red',  font=('calibri', 15, 'bold'), grab_anywhere=True, keep_on_top=False)
+            elif last_row_display1.item() > 200 and last_row_display1.item() < 230:
+                SetLED(windowmain, '_FF1HRLED_', 'orange' if last_row_display1.all()  > 200 and last_row_display1.all() <230  else 'orange')
+                SetLED(windowmain, '_TABDEFAULTFF1HRLED_', 'orange' if last_row_display1.all()  > 200 and last_row_display1.all() <230  else 'orange')
             else:
                 SetLED(windowmain, '_FF1HRLED_', 'green' if last_row_display1.all() < 230 else 'green')
                 SetLED(windowmain, '_TABDEFAULTFF1HRLED_', 'green' if last_row_display1.all() < 230 else 'green')
@@ -488,12 +525,16 @@ def main():
             #movwarn1 = df1['movement'].max()
             last_row_display1t = df1t['temp'].iloc[-1]
             windowmain['_TEMPTEXT1_'].Update(last_row_display1t)
-            if last_row_display1t.item() > 500:
+            if last_row_display1t.item() >= 500:
                 windowmain['_TEMPWARN1_'].Update('High Temperature')
                 SetLED(windowmain, '_FF1TEMPLED_', 'red' if last_row_display1t.all() > 500 else 'red')
                 SetLED(windowmain, '_TABDEFAULTFF1TEMPLED_', 'red' if last_row_display1.all() > 500 else 'red')
                 sg.PopupAutoClose('WARNING! HIGH TEMPERATURE DETECTED!', auto_close_duration=3, non_blocking=True,
                 background_color='red',  font=('calibri', 15, 'bold'), grab_anywhere=True, keep_on_top=False)
+            elif last_row_display1t.item() > 400 and last_row_display1t.item() < 500:
+                windowmain['_TEMPWARN1_'].Update('Moderate Temperature')
+                SetLED(windowmain, '_FF1TEMPLED_', 'orange' if last_row_display1t.all()  > 400 and last_row_display1t.all() < 500  else 'orange')
+                SetLED(windowmain, '_TABDEFAULTFF1TEMPLED_', 'orange' if last_row_display1t.all()  > 400 and last_row_display1t.all() < 500  else 'orange')
             else:
                 windowmain['_TEMPWARN1_'].Update('No warnings')
                 SetLED(windowmain, '_FF1TEMPLED_', 'green' if last_row_display1t.all() < 500 else 'green')
@@ -510,16 +551,19 @@ def main():
             last_row_display2 = df2['heartrate'].iloc[-1]
             windowmain['_HRTEXT2_'].Update(last_row_display2)
             windowmain['_MAXHRTEXT2_'].Update(maxhr2)
-            if last_row_display2.item() > 230:
+            if last_row_display2.item() >= 230:
                 SetLED(windowmain, '_FF2HRLED_', 'red' if last_row_display2.all() > 230 else 'red')
                 SetLED(windowmain, '_TABDEFAULTFF2HRLED_', 'red' if last_row_display2.all() > 230 else 'red')
                 sg.PopupAutoClose('WARNING! HEART RATE IS HIGH!', auto_close_duration=3, non_blocking=True,
                 background_color='red',  font=('calibri', 15, 'bold'), grab_anywhere=True, keep_on_top=False)
-            elif last_row_display2.item() <=30:
-                SetLED(windowmain, '_FF2HRLED_', 'red' if last_row_display2.all() <= 30  else 'red')
-                SetLED(windowmain, '_TABDEFAULTFF2HRLED_', 'red' if last_row_display2.all() <= 30 else 'red')
+            elif last_row_display2.item() <=50:
+                SetLED(windowmain, '_FF2HRLED_', 'red' if last_row_display2.all() <= 50  else 'red')
+                SetLED(windowmain, '_TABDEFAULTFF2HRLED_', 'red' if last_row_display2.all() <= 50 else 'red')
                 sg.PopupAutoClose('WARNING! HEART RATE IS LOW!', auto_close_duration=3, non_blocking=True,
                 background_color='red',  font=('calibri', 15, 'bold'), grab_anywhere=True, keep_on_top=False)
+            elif last_row_display2.item() > 200 and last_row_display2.item() < 230:
+                SetLED(windowmain, '_FF2HRLED_', 'orange' if last_row_display2.all()  > 200 and last_row_display2.all() <230  else 'orange')
+                SetLED(windowmain, '_TABDEFAULTFF2HRLED_', 'orange' if last_row_display2.all()  > 200 and last_row_display2.all() <230  else 'orange')
             else:
                 SetLED(windowmain, '_FF2HRLED_', 'green' if last_row_display2.all() < 230 else 'green')
                 SetLED(windowmain, '_TABDEFAULTFF2HRLED_', 'green' if last_row_display2.all() < 230 else 'green')
@@ -553,6 +597,10 @@ def main():
                 SetLED(windowmain, '_TABDEFAULTFF2TEMPLED_', 'red' if last_row_display2.all() > 500 else 'red')
                 sg.PopupAutoClose('WARNING! HIGH TEMPERATURE DETECTED!', auto_close_duration=3, non_blocking=True,
                 background_color='red',  font=('calibri', 15, 'bold'), grab_anywhere=True, keep_on_top=False)
+            elif last_row_display2t.item() > 400 and last_row_display2t.item() < 500:
+                windowmain['_TEMPWARN2_'].Update('Moderate Temperature')
+                SetLED(windowmain, '_FF2TEMPLED_', 'orange' if last_row_display2t.all()  > 400 and last_row_display2t.all() < 500  else 'orange')
+                SetLED(windowmain, '_TABDEFAULTFF2TEMPLED_', 'orange' if last_row_display2t.all()  > 400 and last_row_display2t.all() < 500  else 'orange')
             else:
                 windowmain['_TEMPWARN2_'].Update('No warnings')
                 SetLED(windowmain, '_FF2TEMPLED_', 'green' if last_row_display2t.all() < 500 else 'green')
@@ -569,16 +617,19 @@ def main():
             last_row_display3 = df3['heartrate'].iloc[-1]
             windowmain['_HRTEXT3_'].Update(last_row_display3)
             windowmain['_MAXHRTEXT3_'].Update(maxhr3)
-            if last_row_display3.item() > 230:
+            if last_row_display3.item() >= 230:
                 SetLED(windowmain, '_FF3HRLED_', 'red' if last_row_display3.all() > 230  else 'red')
                 SetLED(windowmain, '_TABDEFAULTFF3HRLED_', 'red' if last_row_display3.all() > 230 else 'red')
                 sg.PopupAutoClose('WARNING! HEART RATE IS HIGH!', auto_close_duration=3, non_blocking=True,
                 background_color='red',  font=('calibri', 15, 'bold'), grab_anywhere=True, keep_on_top=False)
-            elif last_row_display3.item() <=30:
-                SetLED(windowmain, '_FF3HRLED_', 'red' if last_row_display3.all() <= 30  else 'red')
-                SetLED(windowmain, '_TABDEFAULTFF3HRLED_', 'red' if last_row_display3.all() <= 30 else 'red')
+            elif last_row_display3.item() <=50:
+                SetLED(windowmain, '_FF3HRLED_', 'red' if last_row_display3.all() <= 50  else 'red')
+                SetLED(windowmain, '_TABDEFAULTFF3HRLED_', 'red' if last_row_display3.all() <= 50 else 'red')
                 sg.PopupAutoClose('WARNING! HEART RATE IS LOW!', auto_close_duration=3, non_blocking=True,
                 background_color='red',  font=('calibri', 15, 'bold'), grab_anywhere=True, keep_on_top=False)
+            elif last_row_display1.item() > 200 and last_row_display1.item() < 230:
+                SetLED(windowmain, '_FF3HRLED_', 'orange' if last_row_display3.all()  > 200 and last_row_display3.all() <230  else 'orange')
+                SetLED(windowmain, '_TABDEFAULTFF3HRLED_', 'orange' if last_row_display3.all()  > 200 and last_row_display3.all() <230  else 'orange')
             else:
                 SetLED(windowmain, '_FF3HRLED_', 'green' if last_row_display3.all() < 230 else 'green')
                 SetLED(windowmain, '_TABDEFAULTFF3HRLED_', 'green' if last_row_display3.all() < 230 else 'green')
@@ -612,6 +663,10 @@ def main():
                 SetLED(windowmain, '_TABDEFAULTFF3TEMPLED_', 'red' if last_row_display3.all() > 500 else 'red')
                 sg.PopupAutoClose('WARNING! HIGH TEMPERATURE DETECTED!', auto_close_duration=3, non_blocking=True,
                 background_color='red',  font=('calibri', 15, 'bold'), grab_anywhere=True, keep_on_top=False)
+            elif last_row_display3t.item() > 400 and last_row_display3t.item() < 500:
+                windowmain['_TEMPWARN3_'].Update('Moderate Temperature')
+                SetLED(windowmain, '_FF3TEMPLED_', 'orange' if last_row_display3t.all()  > 400 and last_row_display3t.all() < 500  else 'orange')
+                SetLED(windowmain, '_TABDEFAULTFF3TEMPLED_', 'orange' if last_row_display3t.all()  > 400 and last_row_display3t.all() < 500  else 'orange')
             else:
                 windowmain['_TEMPWARN3_'].Update('No warnings')
                 SetLED(windowmain, '_FF3TEMPLED_', 'green' if last_row_display3t.all() < 500 else 'green')
@@ -624,8 +679,9 @@ def main():
 
 # -------------------------------- raw tables -------------------------------- #
 
-        if event == 'FF1 RAW Heart Rate' or event == '_RAWHR1_':
+        if event == '_RAWHR1_':
             hrtable1()
+
         if event == 'FF1 RAW Movement' or event == '_RAWMOV1_':
             movtable1()
 
