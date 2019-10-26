@@ -34,35 +34,7 @@ The SFSS is open source, cheap to build and adaptable.
 
 Interesting question.
 
-<!---Here's a top level breakdown
-<!---```mermaid-->
-<!---graph TD-->
-<!---    ENV[Environment]-->
-<!---    ENV- ->TEMP(Temperature)
-<!----->
-<!---    FF[Firefighter]-->
-<!---    FF- ->MOV(Movement)-->
-<!---    FF- ->HR(Heart Rate)-->
-<!----->
-<!---    MC1[\Microcontroller 1/]-->
-<!----->
-<!---    TEMP->MC1-->
-<!---    MOV->MC1-->
-<!---    HR->MC1-->
-<!----->
-<!---    MC2[/Microcontroller 2\]-->
-<!---    MC1 -- zigbee -> MC2-->
-<!----->
-<!---    PC[Computer]-->
-<!---    GUI[SFSS GUI]-->
-<!---    MC2 -- serial - -> PC -->
-<!---    PC -- python<br>magic - -> GUI -->
-<!----->
-<!---    BAD(Warning!<br>Popup)-->
-<!---    GOOD(Display)-->
-<!---    GUI -- Danger --- BAD-->
-<!---    GUI -- All Good--- GOOD-->
-<!---```-->
+Here's a top level breakdown of what happens with the SFSS:
 
 ![mermaid Flow Diagram](https://github.com/rob-wells/sfss/blob/master/misc/mermaid%20-%20flow%20diagram.svg)
 

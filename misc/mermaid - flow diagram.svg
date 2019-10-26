@@ -1,49 +1,49 @@
-<svg id="mermaid-1572132626954" width="388.891658782959" xmlns="http://www.w3.org/2000/svg" height="687" viewBox="0 0 388.891658782959 687"><style>
+<svg id="mermaid-1572134132988" width="388.89167404174805" xmlns="http://www.w3.org/2000/svg" height="687" viewBox="0 0 388.89167404174805 687"><style>
 
 
 
-#mermaid-1572132626954 .label {
+#mermaid-1572134132988 .label {
   font-family: 'trebuchet ms', verdana, arial;
   font-family: var(--mermaid-font-family);
   color: #333; }
 
-#mermaid-1572132626954 .label text {
+#mermaid-1572134132988 .label text {
   fill: #333; }
 
-#mermaid-1572132626954 .node rect,
-#mermaid-1572132626954 .node circle,
-#mermaid-1572132626954 .node ellipse,
-#mermaid-1572132626954 .node polygon {
+#mermaid-1572134132988 .node rect,
+#mermaid-1572134132988 .node circle,
+#mermaid-1572134132988 .node ellipse,
+#mermaid-1572134132988 .node polygon {
   fill: #ECECFF;
   stroke: #9370DB;
   stroke-width: 1px; }
 
-#mermaid-1572132626954 .node .label {
+#mermaid-1572134132988 .node .label {
   text-align: center; }
 
-#mermaid-1572132626954 .node.clickable {
+#mermaid-1572134132988 .node.clickable {
   cursor: pointer; }
 
-#mermaid-1572132626954 .arrowheadPath {
+#mermaid-1572134132988 .arrowheadPath {
   fill: #333333; }
 
-#mermaid-1572132626954 .edgePath .path {
+#mermaid-1572134132988 .edgePath .path {
   stroke: #333333;
   stroke-width: 1.5px; }
 
-#mermaid-1572132626954 .edgeLabel {
+#mermaid-1572134132988 .edgeLabel {
   background-color: #e8e8e8;
   text-align: center; }
 
-#mermaid-1572132626954 .cluster rect {
+#mermaid-1572134132988 .cluster rect {
   fill: #ffffde;
   stroke: #aaaa33;
   stroke-width: 1px; }
 
-#mermaid-1572132626954 .cluster text {
+#mermaid-1572134132988 .cluster text {
   fill: #333; }
 
-#mermaid-1572132626954 div.mermaidTooltip {
+#mermaid-1572134132988 div.mermaidTooltip {
   position: absolute;
   text-align: center;
   max-width: 200px;
@@ -57,117 +57,117 @@
   pointer-events: none;
   z-index: 100; }
 
-#mermaid-1572132626954 .actor {
+#mermaid-1572134132988 .actor {
   stroke: #CCCCFF;
   fill: #ECECFF; }
 
-#mermaid-1572132626954 text.actor {
+#mermaid-1572134132988 text.actor {
   fill: black;
   stroke: none; }
 
-#mermaid-1572132626954 .actor-line {
+#mermaid-1572134132988 .actor-line {
   stroke: grey; }
 
-#mermaid-1572132626954 .messageLine0 {
+#mermaid-1572134132988 .messageLine0 {
   stroke-width: 1.5;
   stroke-dasharray: '2 2';
   stroke: #333; }
 
-#mermaid-1572132626954 .messageLine1 {
+#mermaid-1572134132988 .messageLine1 {
   stroke-width: 1.5;
   stroke-dasharray: '2 2';
   stroke: #333; }
 
-#mermaid-1572132626954 #arrowhead {
+#mermaid-1572134132988 #arrowhead {
   fill: #333; }
 
-#mermaid-1572132626954 .sequenceNumber {
+#mermaid-1572134132988 .sequenceNumber {
   fill: white; }
 
-#mermaid-1572132626954 #sequencenumber {
+#mermaid-1572134132988 #sequencenumber {
   fill: #333; }
 
-#mermaid-1572132626954 #crosshead path {
+#mermaid-1572134132988 #crosshead path {
   fill: #333 !important;
   stroke: #333 !important; }
 
-#mermaid-1572132626954 .messageText {
+#mermaid-1572134132988 .messageText {
   fill: #333;
   stroke: none; }
 
-#mermaid-1572132626954 .labelBox {
+#mermaid-1572134132988 .labelBox {
   stroke: #CCCCFF;
   fill: #ECECFF; }
 
-#mermaid-1572132626954 .labelText {
+#mermaid-1572134132988 .labelText {
   fill: black;
   stroke: none; }
 
-#mermaid-1572132626954 .loopText {
+#mermaid-1572134132988 .loopText {
   fill: black;
   stroke: none; }
 
-#mermaid-1572132626954 .loopLine {
+#mermaid-1572134132988 .loopLine {
   stroke-width: 2;
   stroke-dasharray: '2 2';
   stroke: #CCCCFF; }
 
-#mermaid-1572132626954 .note {
+#mermaid-1572134132988 .note {
   stroke: #aaaa33;
   fill: #fff5ad; }
 
-#mermaid-1572132626954 .noteText {
+#mermaid-1572134132988 .noteText {
   fill: black;
   stroke: none;
   font-family: 'trebuchet ms', verdana, arial;
   font-family: var(--mermaid-font-family);
   font-size: 14px; }
 
-#mermaid-1572132626954 .activation0 {
+#mermaid-1572134132988 .activation0 {
   fill: #f4f4f4;
   stroke: #666; }
 
-#mermaid-1572132626954 .activation1 {
+#mermaid-1572134132988 .activation1 {
   fill: #f4f4f4;
   stroke: #666; }
 
-#mermaid-1572132626954 .activation2 {
+#mermaid-1572134132988 .activation2 {
   fill: #f4f4f4;
   stroke: #666; }
 
 
-#mermaid-1572132626954 .mermaid-main-font {
+#mermaid-1572134132988 .mermaid-main-font {
   font-family: "trebuchet ms", verdana, arial;
   font-family: var(--mermaid-font-family); }
 
-#mermaid-1572132626954 .section {
+#mermaid-1572134132988 .section {
   stroke: none;
   opacity: 0.2; }
 
-#mermaid-1572132626954 .section0 {
+#mermaid-1572134132988 .section0 {
   fill: rgba(102, 102, 255, 0.49); }
 
-#mermaid-1572132626954 .section2 {
+#mermaid-1572134132988 .section2 {
   fill: #fff400; }
 
-#mermaid-1572132626954 .section1,
-#mermaid-1572132626954 .section3 {
+#mermaid-1572134132988 .section1,
+#mermaid-1572134132988 .section3 {
   fill: white;
   opacity: 0.2; }
 
-#mermaid-1572132626954 .sectionTitle0 {
+#mermaid-1572134132988 .sectionTitle0 {
   fill: #333; }
 
-#mermaid-1572132626954 .sectionTitle1 {
+#mermaid-1572134132988 .sectionTitle1 {
   fill: #333; }
 
-#mermaid-1572132626954 .sectionTitle2 {
+#mermaid-1572134132988 .sectionTitle2 {
   fill: #333; }
 
-#mermaid-1572132626954 .sectionTitle3 {
+#mermaid-1572134132988 .sectionTitle3 {
   fill: #333; }
 
-#mermaid-1572132626954 .sectionTitle {
+#mermaid-1572134132988 .sectionTitle {
   text-anchor: start;
   font-size: 11px;
   text-height: 14px;
@@ -175,309 +175,309 @@
   font-family: var(--mermaid-font-family); }
 
 
-#mermaid-1572132626954 .grid .tick {
+#mermaid-1572134132988 .grid .tick {
   stroke: lightgrey;
   opacity: 0.3;
   shape-rendering: crispEdges; }
-#mermaid-1572132626954   .grid .tick text {
+#mermaid-1572134132988   .grid .tick text {
     font-family: 'trebuchet ms', verdana, arial;
     font-family: var(--mermaid-font-family); }
 
-#mermaid-1572132626954 .grid path {
+#mermaid-1572134132988 .grid path {
   stroke-width: 0; }
 
 
-#mermaid-1572132626954 .today {
+#mermaid-1572134132988 .today {
   fill: none;
   stroke: red;
   stroke-width: 2px; }
 
 
 
-#mermaid-1572132626954 .task {
+#mermaid-1572134132988 .task {
   stroke-width: 2; }
 
-#mermaid-1572132626954 .taskText {
+#mermaid-1572134132988 .taskText {
   text-anchor: middle;
   font-family: 'trebuchet ms', verdana, arial;
   font-family: var(--mermaid-font-family); }
 
-#mermaid-1572132626954 .taskText:not([font-size]) {
+#mermaid-1572134132988 .taskText:not([font-size]) {
   font-size: 11px; }
 
-#mermaid-1572132626954 .taskTextOutsideRight {
+#mermaid-1572134132988 .taskTextOutsideRight {
   fill: black;
   text-anchor: start;
   font-size: 11px;
   font-family: 'trebuchet ms', verdana, arial;
   font-family: var(--mermaid-font-family); }
 
-#mermaid-1572132626954 .taskTextOutsideLeft {
+#mermaid-1572134132988 .taskTextOutsideLeft {
   fill: black;
   text-anchor: end;
   font-size: 11px; }
 
 
-#mermaid-1572132626954 .task.clickable {
+#mermaid-1572134132988 .task.clickable {
   cursor: pointer; }
 
-#mermaid-1572132626954 .taskText.clickable {
+#mermaid-1572134132988 .taskText.clickable {
   cursor: pointer;
   fill: #003163 !important;
   font-weight: bold; }
 
-#mermaid-1572132626954 .taskTextOutsideLeft.clickable {
+#mermaid-1572134132988 .taskTextOutsideLeft.clickable {
   cursor: pointer;
   fill: #003163 !important;
   font-weight: bold; }
 
-#mermaid-1572132626954 .taskTextOutsideRight.clickable {
+#mermaid-1572134132988 .taskTextOutsideRight.clickable {
   cursor: pointer;
   fill: #003163 !important;
   font-weight: bold; }
 
 
-#mermaid-1572132626954 .taskText0,
-#mermaid-1572132626954 .taskText1,
-#mermaid-1572132626954 .taskText2,
-#mermaid-1572132626954 .taskText3 {
+#mermaid-1572134132988 .taskText0,
+#mermaid-1572134132988 .taskText1,
+#mermaid-1572134132988 .taskText2,
+#mermaid-1572134132988 .taskText3 {
   fill: white; }
 
-#mermaid-1572132626954 .task0,
-#mermaid-1572132626954 .task1,
-#mermaid-1572132626954 .task2,
-#mermaid-1572132626954 .task3 {
+#mermaid-1572134132988 .task0,
+#mermaid-1572134132988 .task1,
+#mermaid-1572134132988 .task2,
+#mermaid-1572134132988 .task3 {
   fill: #8a90dd;
   stroke: #534fbc; }
 
-#mermaid-1572132626954 .taskTextOutside0,
-#mermaid-1572132626954 .taskTextOutside2 {
+#mermaid-1572134132988 .taskTextOutside0,
+#mermaid-1572134132988 .taskTextOutside2 {
   fill: black; }
 
-#mermaid-1572132626954 .taskTextOutside1,
-#mermaid-1572132626954 .taskTextOutside3 {
+#mermaid-1572134132988 .taskTextOutside1,
+#mermaid-1572134132988 .taskTextOutside3 {
   fill: black; }
 
 
-#mermaid-1572132626954 .active0,
-#mermaid-1572132626954 .active1,
-#mermaid-1572132626954 .active2,
-#mermaid-1572132626954 .active3 {
+#mermaid-1572134132988 .active0,
+#mermaid-1572134132988 .active1,
+#mermaid-1572134132988 .active2,
+#mermaid-1572134132988 .active3 {
   fill: #bfc7ff;
   stroke: #534fbc; }
 
-#mermaid-1572132626954 .activeText0,
-#mermaid-1572132626954 .activeText1,
-#mermaid-1572132626954 .activeText2,
-#mermaid-1572132626954 .activeText3 {
+#mermaid-1572134132988 .activeText0,
+#mermaid-1572134132988 .activeText1,
+#mermaid-1572134132988 .activeText2,
+#mermaid-1572134132988 .activeText3 {
   fill: black !important; }
 
 
-#mermaid-1572132626954 .done0,
-#mermaid-1572132626954 .done1,
-#mermaid-1572132626954 .done2,
-#mermaid-1572132626954 .done3 {
+#mermaid-1572134132988 .done0,
+#mermaid-1572134132988 .done1,
+#mermaid-1572134132988 .done2,
+#mermaid-1572134132988 .done3 {
   stroke: grey;
   fill: lightgrey;
   stroke-width: 2; }
 
-#mermaid-1572132626954 .doneText0,
-#mermaid-1572132626954 .doneText1,
-#mermaid-1572132626954 .doneText2,
-#mermaid-1572132626954 .doneText3 {
+#mermaid-1572134132988 .doneText0,
+#mermaid-1572134132988 .doneText1,
+#mermaid-1572134132988 .doneText2,
+#mermaid-1572134132988 .doneText3 {
   fill: black !important; }
 
 
-#mermaid-1572132626954 .crit0,
-#mermaid-1572132626954 .crit1,
-#mermaid-1572132626954 .crit2,
-#mermaid-1572132626954 .crit3 {
+#mermaid-1572134132988 .crit0,
+#mermaid-1572134132988 .crit1,
+#mermaid-1572134132988 .crit2,
+#mermaid-1572134132988 .crit3 {
   stroke: #ff8888;
   fill: red;
   stroke-width: 2; }
 
-#mermaid-1572132626954 .activeCrit0,
-#mermaid-1572132626954 .activeCrit1,
-#mermaid-1572132626954 .activeCrit2,
-#mermaid-1572132626954 .activeCrit3 {
+#mermaid-1572134132988 .activeCrit0,
+#mermaid-1572134132988 .activeCrit1,
+#mermaid-1572134132988 .activeCrit2,
+#mermaid-1572134132988 .activeCrit3 {
   stroke: #ff8888;
   fill: #bfc7ff;
   stroke-width: 2; }
 
-#mermaid-1572132626954 .doneCrit0,
-#mermaid-1572132626954 .doneCrit1,
-#mermaid-1572132626954 .doneCrit2,
-#mermaid-1572132626954 .doneCrit3 {
+#mermaid-1572134132988 .doneCrit0,
+#mermaid-1572134132988 .doneCrit1,
+#mermaid-1572134132988 .doneCrit2,
+#mermaid-1572134132988 .doneCrit3 {
   stroke: #ff8888;
   fill: lightgrey;
   stroke-width: 2;
   cursor: pointer;
   shape-rendering: crispEdges; }
 
-#mermaid-1572132626954 .milestone {
+#mermaid-1572134132988 .milestone {
   transform: rotate(45deg) scale(0.8, 0.8); }
 
-#mermaid-1572132626954 .milestoneText {
+#mermaid-1572134132988 .milestoneText {
   font-style: italic; }
 
-#mermaid-1572132626954 .doneCritText0,
-#mermaid-1572132626954 .doneCritText1,
-#mermaid-1572132626954 .doneCritText2,
-#mermaid-1572132626954 .doneCritText3 {
+#mermaid-1572134132988 .doneCritText0,
+#mermaid-1572134132988 .doneCritText1,
+#mermaid-1572134132988 .doneCritText2,
+#mermaid-1572134132988 .doneCritText3 {
   fill: black !important; }
 
-#mermaid-1572132626954 .activeCritText0,
-#mermaid-1572132626954 .activeCritText1,
-#mermaid-1572132626954 .activeCritText2,
-#mermaid-1572132626954 .activeCritText3 {
+#mermaid-1572134132988 .activeCritText0,
+#mermaid-1572134132988 .activeCritText1,
+#mermaid-1572134132988 .activeCritText2,
+#mermaid-1572134132988 .activeCritText3 {
   fill: black !important; }
 
-#mermaid-1572132626954 .titleText {
+#mermaid-1572134132988 .titleText {
   text-anchor: middle;
   font-size: 18px;
   fill: black;
   font-family: 'trebuchet ms', verdana, arial;
   font-family: var(--mermaid-font-family); }
 
-#mermaid-1572132626954 g.classGroup text {
+#mermaid-1572134132988 g.classGroup text {
   fill: #9370DB;
   stroke: none;
   font-family: 'trebuchet ms', verdana, arial;
   font-family: var(--mermaid-font-family);
   font-size: 10px; }
-#mermaid-1572132626954   g.classGroup text .title {
+#mermaid-1572134132988   g.classGroup text .title {
     font-weight: bolder; }
 
-#mermaid-1572132626954 g.classGroup rect {
+#mermaid-1572134132988 g.classGroup rect {
   fill: #ECECFF;
   stroke: #9370DB; }
 
-#mermaid-1572132626954 g.classGroup line {
+#mermaid-1572134132988 g.classGroup line {
   stroke: #9370DB;
   stroke-width: 1; }
 
-#mermaid-1572132626954 .classLabel .box {
+#mermaid-1572134132988 .classLabel .box {
   stroke: none;
   stroke-width: 0;
   fill: #ECECFF;
   opacity: 0.5; }
 
-#mermaid-1572132626954 .classLabel .label {
+#mermaid-1572134132988 .classLabel .label {
   fill: #9370DB;
   font-size: 10px; }
 
-#mermaid-1572132626954 .relation {
+#mermaid-1572134132988 .relation {
   stroke: #9370DB;
   stroke-width: 1;
   fill: none; }
 
-#mermaid-1572132626954 #compositionStart {
+#mermaid-1572134132988 #compositionStart {
   fill: #9370DB;
   stroke: #9370DB;
   stroke-width: 1; }
 
-#mermaid-1572132626954 #compositionEnd {
+#mermaid-1572134132988 #compositionEnd {
   fill: #9370DB;
   stroke: #9370DB;
   stroke-width: 1; }
 
-#mermaid-1572132626954 #aggregationStart {
+#mermaid-1572134132988 #aggregationStart {
   fill: #ECECFF;
   stroke: #9370DB;
   stroke-width: 1; }
 
-#mermaid-1572132626954 #aggregationEnd {
+#mermaid-1572134132988 #aggregationEnd {
   fill: #ECECFF;
   stroke: #9370DB;
   stroke-width: 1; }
 
-#mermaid-1572132626954 #dependencyStart {
+#mermaid-1572134132988 #dependencyStart {
   fill: #9370DB;
   stroke: #9370DB;
   stroke-width: 1; }
 
-#mermaid-1572132626954 #dependencyEnd {
+#mermaid-1572134132988 #dependencyEnd {
   fill: #9370DB;
   stroke: #9370DB;
   stroke-width: 1; }
 
-#mermaid-1572132626954 #extensionStart {
+#mermaid-1572134132988 #extensionStart {
   fill: #9370DB;
   stroke: #9370DB;
   stroke-width: 1; }
 
-#mermaid-1572132626954 #extensionEnd {
+#mermaid-1572134132988 #extensionEnd {
   fill: #9370DB;
   stroke: #9370DB;
   stroke-width: 1; }
 
-#mermaid-1572132626954 .commit-id,
-#mermaid-1572132626954 .commit-msg,
-#mermaid-1572132626954 .branch-label {
+#mermaid-1572134132988 .commit-id,
+#mermaid-1572134132988 .commit-msg,
+#mermaid-1572134132988 .branch-label {
   fill: lightgrey;
   color: lightgrey;
   font-family: 'trebuchet ms', verdana, arial;
   font-family: var(--mermaid-font-family); }
 
-#mermaid-1572132626954 .pieTitleText {
+#mermaid-1572134132988 .pieTitleText {
   text-anchor: middle;
   font-size: 25px;
   fill: black;
   font-family: 'trebuchet ms', verdana, arial;
   font-family: var(--mermaid-font-family); }
 
-#mermaid-1572132626954 .slice {
+#mermaid-1572134132988 .slice {
   font-family: 'trebuchet ms', verdana, arial;
   font-family: var(--mermaid-font-family); }
 
-#mermaid-1572132626954 g.stateGroup text {
+#mermaid-1572134132988 g.stateGroup text {
   fill: #9370DB;
   stroke: none;
   font-size: 10px;
   font-family: 'trebuchet ms', verdana, arial;
   font-family: var(--mermaid-font-family); }
 
-#mermaid-1572132626954 g.stateGroup text {
+#mermaid-1572134132988 g.stateGroup text {
   fill: #9370DB;
   stroke: none;
   font-size: 10px; }
 
-#mermaid-1572132626954 g.stateGroup .state-title {
+#mermaid-1572134132988 g.stateGroup .state-title {
   font-weight: bolder;
   fill: black; }
 
-#mermaid-1572132626954 g.stateGroup rect {
+#mermaid-1572134132988 g.stateGroup rect {
   fill: #ECECFF;
   stroke: #9370DB; }
 
-#mermaid-1572132626954 g.stateGroup line {
+#mermaid-1572134132988 g.stateGroup line {
   stroke: #9370DB;
   stroke-width: 1; }
 
-#mermaid-1572132626954 .transition {
+#mermaid-1572134132988 .transition {
   stroke: #9370DB;
   stroke-width: 1;
   fill: none; }
 
-#mermaid-1572132626954 .stateGroup .composit {
+#mermaid-1572134132988 .stateGroup .composit {
   fill: white;
   border-bottom: 1px; }
 
-#mermaid-1572132626954 .state-note {
+#mermaid-1572134132988 .state-note {
   stroke: #aaaa33;
   fill: #fff5ad; }
-#mermaid-1572132626954   .state-note text {
+#mermaid-1572134132988   .state-note text {
     fill: black;
     stroke: none;
     font-size: 10px; }
 
-#mermaid-1572132626954 .stateLabel .box {
+#mermaid-1572134132988 .stateLabel .box {
   stroke: none;
   stroke-width: 0;
   fill: #ECECFF;
   opacity: 0.5; }
 
-#mermaid-1572132626954 .stateLabel text {
+#mermaid-1572134132988 .stateLabel text {
   fill: black;
   font-size: 10px;
   font-weight: bold;
@@ -488,7 +488,7 @@
   --mermaid-font-family: '"trebuchet ms", verdana, arial';
   --mermaid-font-family: "Comic Sans MS", "Comic Sans", cursive; }
 
-:root { --mermaid-font-family: "trebuchet ms", verdana, arial;}</style><style>#mermaid-1572132626954 {
+:root { --mermaid-font-family: "trebuchet ms", verdana, arial;}</style><style>#mermaid-1572134132988 {
     color: rgba(0, 0, 0, 0.65);
     font: ;
-  }</style><g transform="translate(-12, -12)"><g class="output"><g class="clusters"></g><g class="edgePaths"><g class="edgePath" style="opacity: 1;"><path class="path" d="M70.05833435058594,61L70.05833435058594,65.16666666666667C70.05833435058594,69.33333333333333,70.05833435058594,77.66666666666667,70.05833435058594,86C70.05833435058594,94.33333333333333,70.05833435058594,102.66666666666667,70.05833435058594,106.83333333333333L70.05833435058594,111" marker-end="url(#arrowhead42)" style="fill:none"></path><defs><marker id="arrowhead42" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M250.0865383357792,61L243.8498932695214,65.16666666666667C237.61324820326362,69.33333333333333,225.139958070748,77.66666666666667,218.9033130044902,86C212.66666793823242,94.33333333333333,212.66666793823242,102.66666666666667,212.66666793823242,106.83333333333333L212.66666793823242,111" marker-end="url(#arrowhead43)" style="fill:none"></path><defs><marker id="arrowhead43" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M311.45512578775595,61L317.6917708540138,65.16666666666667C323.92841592027156,69.33333333333333,336.4017060527871,77.66666666666667,342.63835111904496,86C348.87499618530273,94.33333333333333,348.87499618530273,102.66666666666667,348.87499618530273,106.83333333333333L348.87499618530273,111" marker-end="url(#arrowhead44)" style="fill:none"></path><defs><marker id="arrowhead44" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M70.05833435058594,152L70.05833435058594,156.16666666666666C70.05833435058594,160.33333333333334,70.05833435058594,168.66666666666666,83.2010388915792,177.08333333333334C96.34374343257247,185.5,122.629152514559,194,135.77185705555226,198.24999999999997L148.91456159654552,202.49999999999997" marker-end="url(#arrowhead45)" style="fill:none"></path><defs><marker id="arrowhead45" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M212.66666793823242,152L212.66666793823242,156.16666666666666C212.66666793823242,160.33333333333334,212.66666793823242,168.66666666666666,212.75000127156576,177.08333333333334C212.83333460489908,185.5,213.00000127156576,194,213.08333460489908,198.24999999999997L213.1666679382324,202.49999999999997" marker-end="url(#arrowhead46)" style="fill:none"></path><defs><marker id="arrowhead46" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M348.87499618530273,152L348.87499618530273,156.16666666666666C348.87499618530273,160.33333333333334,348.87499618530273,168.66666666666666,336.4850393861205,177.08333333333334C324.0950825869382,185.5,299.3151689885737,194,286.92521218939146,198.24999999999997L274.5352553902092,202.49999999999997" marker-end="url(#arrowhead47)" style="fill:none"></path><defs><marker id="arrowhead47" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M213.1666679382324,243.49999999999994L213.08333460489905,249.3333333333333C213.00000127156576,255.16666666666663,212.83333460489908,266.8333333333333,212.83333460489908,278.6666666666667C212.83333460489908,290.5,213.00000127156576,302.5,213.08333460489908,308.5L213.1666679382324,314.5" marker-end="url(#arrowhead48)" style="fill:none"></path><defs><marker id="arrowhead48" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M213.1666679382324,355.50000000000006L213.08333460489905,361.3333333333333C213.00000127156576,367.1666666666667,212.83333460489908,378.8333333333333,212.75000127156576,390.5833333333333C212.66666793823242,402.3333333333333,212.66666793823242,414.1666666666667,212.66666793823242,420.0833333333333L212.66666793823242,426" marker-end="url(#arrowhead49)" style="fill:none"></path><defs><marker id="arrowhead49" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M212.66666793823242,467L212.66666793823242,472.9166666666667C212.66666793823242,478.8333333333333,212.66666793823242,490.6666666666667,212.66666793823242,502.5C212.66666793823242,514.3333333333334,212.66666793823242,526.1666666666666,212.66666793823242,532.0833333333334L212.66666793823242,538" marker-end="url(#arrowhead50)" style="fill:none"></path><defs><marker id="arrowhead50" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M190.7176356656211,579L184.38275236742837,584.9166666666666C178.04786906923565,590.8333333333334,165.37810247285026,602.6666666666666,159.04321917465754,614.5C152.70833587646484,626.3333333333334,152.70833587646484,638.1666666666666,152.70833587646484,644.0833333333334L152.70833587646484,650" marker-end="url(#arrowhead51)" style="fill:none"></path><defs><marker id="arrowhead51" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 0 0 L 0 0 z" style="fill: #333"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M234.61570021084376,579L240.95058350903648,584.9166666666666C247.2854668072292,590.8333333333334,259.9552334036146,602.6666666666666,266.2901167018073,614.5C272.625,626.3333333333334,272.625,638.1666666666666,272.625,644.0833333333334L272.625,650" marker-end="url(#arrowhead52)" style="fill:none"></path><defs><marker id="arrowhead52" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 0 0 L 0 0 z" style="fill: #333"></path></marker></defs></g></g><g class="edgeLabels"><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform="translate(212.66666793823242,278.5)"><g transform="translate(-20.375,-10.5)" class="label"><foreignObject width="40.75" height="21"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel">zigbee</span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform="translate(212.66666793823242,390.5)"><g transform="translate(-17.10832977294922,-10.5)" class="label"><foreignObject width="34.21665954589844" height="21"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel">serial</span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform="translate(212.66666793823242,502.5)"><g transform="translate(-42.10832977294922,-10.5)" class="label"><foreignObject width="84.21665954589844" height="21"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel">python magic</span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform="translate(152.70833587646484,614.5)"><g transform="translate(-21.84166717529297,-10.5)" class="label"><foreignObject width="43.68333435058594" height="21"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel">Danger</span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform="translate(272.625,614.5)"><g transform="translate(-26.51666259765625,-10.5)" class="label"><foreignObject width="53.0333251953125" height="21"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel">All Good</span></div></foreignObject></g></g></g><g class="nodes"><g class="node" style="opacity: 1;" id="ENV" transform="translate(70.05833435058594,40.5)"><rect rx="0" ry="0" x="-49.525001525878906" y="-20.5" width="99.05000305175781" height="41"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-39.525001525878906,-10.5)"><foreignObject width="79.05000305175781" height="21"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Environment</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="TEMP" transform="translate(70.05833435058594,131.5)"><rect rx="5" ry="5" x="-50.05833435058594" y="-20.5" width="100.11666870117188" height="41"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-40.05833435058594,-10.5)"><foreignObject width="80.11666870117188" height="21"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Temperature</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="FF" transform="translate(280.7708320617676,40.5)"><rect rx="0" ry="0" x="-43.44166564941406" y="-20.5" width="86.88333129882812" height="41"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-33.44166564941406,-10.5)"><foreignObject width="66.88333129882812" height="21"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Firefighter</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="MOV" transform="translate(212.66666793823242,131.5)"><rect rx="5" ry="5" x="-42.19166564941406" y="-20.5" width="84.38333129882812" height="41"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-32.19166564941406,-10.5)"><foreignObject width="64.38333129882812" height="21"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Movement</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="HR" transform="translate(348.87499618530273,131.5)"><rect rx="5" ry="5" x="-44.01666259765625" y="-20.5" width="88.0333251953125" height="41"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-34.01666259765625,-10.5)"><foreignObject width="68.0333251953125" height="21"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Heart Rate</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="MC1" transform="translate(212.66666793823242,222.5)"><polygon points="6.833333333333333,0 120.48333231608073,0 140.98333231608072,-41 -13.666666666666666,-41" transform="translate(-63.65833282470703,20.5)"></polygon><g class="label" transform="translate(0,0)"><g transform="translate(-53.65833282470703,-10.5)"><foreignObject width="107.31666564941406" height="21"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Microcontroller 1</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="MC2" transform="translate(212.66666793823242,334.5)"><polygon points="6.833333333333333,0 120.48333231608073,0 140.98333231608072,-41 -13.666666666666666,-41" transform="translate(-63.65833282470703,20.5)"></polygon><g class="label" transform="translate(0,0)"><g transform="translate(-53.65833282470703,-10.5)"><foreignObject width="107.31666564941406" height="21"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Microcontroller 2</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="PC" transform="translate(212.66666793823242,446.5)"><rect rx="0" ry="0" x="-40.78333282470703" y="-20.5" width="81.56666564941406" height="41"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-30.78333282470703,-10.5)"><foreignObject width="61.56666564941406" height="21"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Computer</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="GUI" transform="translate(212.66666793823242,558.5)"><rect rx="0" ry="0" x="-37.10832977294922" y="-20.5" width="74.21665954589844" height="41"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-27.10832977294922,-10.5)"><foreignObject width="54.21665954589844" height="21"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">SFSS GUI</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="BAD" transform="translate(152.70833587646484,670.5)"><rect rx="5" ry="5" x="-37.69999694824219" y="-20.5" width="75.39999389648438" height="41"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-27.699996948242188,-10.5)"><foreignObject width="55.399993896484375" height="21"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Warning!</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="GOOD" transform="translate(272.625,670.5)"><rect rx="5" ry="5" x="-32.21666717529297" y="-20.5" width="64.43333435058594" height="41"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-22.21666717529297,-10.5)"><foreignObject width="44.43333435058594" height="21"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Display</div></foreignObject></g></g></g></g></g></g></svg>
+  }</style><g transform="translate(-12, -12)"><g class="output"><g class="clusters"></g><g class="edgePaths"><g class="edgePath" style="opacity: 1;"><path class="path" d="M70.05833435058594,61L70.05833435058594,65.16666666666667C70.05833435058594,69.33333333333333,70.05833435058594,77.66666666666667,70.05833435058594,86C70.05833435058594,94.33333333333333,70.05833435058594,102.66666666666667,70.05833435058594,106.83333333333333L70.05833435058594,111" marker-end="url(#arrowhead1914)" style="fill:none"></path><defs><marker id="arrowhead1914" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M250.0865404317667,61L243.84989501617767,65.16666666666667C237.6132496005886,69.33333333333333,225.13995876941053,77.66666666666667,218.90331335382146,86C212.66666793823242,94.33333333333333,212.66666793823242,102.66666666666667,212.66666793823242,106.83333333333333L212.66666793823242,111" marker-end="url(#arrowhead1915)" style="fill:none"></path><defs><marker id="arrowhead1915" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M311.455131321163,61L317.69177673675205,65.16666666666667C323.92842215234106,69.33333333333333,336.4017129835192,77.66666666666667,342.63835839910826,86C348.87500381469727,94.33333333333333,348.87500381469727,102.66666666666667,348.87500381469727,106.83333333333333L348.87500381469727,111" marker-end="url(#arrowhead1916)" style="fill:none"></path><defs><marker id="arrowhead1916" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M70.05833435058594,152L70.05833435058594,156.16666666666666C70.05833435058594,160.33333333333334,70.05833435058594,168.66666666666666,83.2010388915792,177.08333333333334C96.34374343257247,185.5,122.629152514559,194,135.77185705555226,198.24999999999997L148.91456159654552,202.49999999999997" marker-end="url(#arrowhead1917)" style="fill:none"></path><defs><marker id="arrowhead1917" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M212.66666793823242,152L212.66666793823242,156.16666666666666C212.66666793823242,160.33333333333334,212.66666793823242,168.66666666666666,212.75000127156576,177.08333333333334C212.83333460489908,185.5,213.00000127156576,194,213.08333460489908,198.24999999999997L213.1666679382324,202.49999999999997" marker-end="url(#arrowhead1918)" style="fill:none"></path><defs><marker id="arrowhead1918" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M348.87500381469727,152L348.87500381469727,156.16666666666666C348.87500381469727,160.33333333333334,348.87500381469727,168.66666666666666,336.4850463168525,177.08333333333334C324.09508881900774,185.5,299.3151738233182,194,286.92521632547346,198.24999999999997L274.5352588276287,202.49999999999997" marker-end="url(#arrowhead1919)" style="fill:none"></path><defs><marker id="arrowhead1919" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M213.1666679382324,243.49999999999994L213.08333460489905,249.3333333333333C213.00000127156576,255.16666666666663,212.83333460489908,266.8333333333333,212.83333460489908,278.6666666666667C212.83333460489908,290.5,213.00000127156576,302.5,213.08333460489908,308.5L213.1666679382324,314.5" marker-end="url(#arrowhead1920)" style="fill:none"></path><defs><marker id="arrowhead1920" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M213.1666679382324,355.50000000000006L213.08333460489905,361.3333333333333C213.00000127156576,367.1666666666667,212.83333460489908,378.8333333333333,212.75000127156576,390.5833333333333C212.66666793823242,402.3333333333333,212.66666793823242,414.1666666666667,212.66666793823242,420.0833333333333L212.66666793823242,426" marker-end="url(#arrowhead1921)" style="fill:none"></path><defs><marker id="arrowhead1921" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M212.66666793823242,467L212.66666793823242,472.9166666666667C212.66666793823242,478.8333333333333,212.66666793823242,490.6666666666667,212.66666793823242,502.5C212.66666793823242,514.3333333333334,212.66666793823242,526.1666666666666,212.66666793823242,532.0833333333334L212.66666793823242,538" marker-end="url(#arrowhead1922)" style="fill:none"></path><defs><marker id="arrowhead1922" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M190.7176342691694,579L184.38275056793577,584.9166666666666C178.0478668667021,590.8333333333334,165.37809946423485,602.6666666666666,159.0432157630012,614.5C152.70833206176758,626.3333333333334,152.70833206176758,638.1666666666666,152.70833206176758,644.0833333333334L152.70833206176758,650" marker-end="url(#arrowhead1923)" style="fill:none"></path><defs><marker id="arrowhead1923" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 0 0 L 0 0 z" style="fill: #333"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M234.61570160729545,579L240.95058530852907,584.9166666666666C247.28546900976275,590.8333333333334,259.95523641223,602.6666666666666,266.2901201134636,614.5C272.62500381469727,626.3333333333334,272.62500381469727,638.1666666666666,272.62500381469727,644.0833333333334L272.62500381469727,650" marker-end="url(#arrowhead1924)" style="fill:none"></path><defs><marker id="arrowhead1924" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 0 0 L 0 0 z" style="fill: #333"></path></marker></defs></g></g><g class="edgeLabels"><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform="translate(212.66666793823242,278.5)"><g transform="translate(-20.900001525878906,-10.5)" class="label"><foreignObject width="41.80000305175781" height="21"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel">Zigbee</span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform="translate(212.66666793823242,390.5)"><g transform="translate(-17.64167022705078,-10.5)" class="label"><foreignObject width="35.28334045410156" height="21"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel">Serial</span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform="translate(212.66666793823242,502.5)"><g transform="translate(-42.10833740234375,-10.5)" class="label"><foreignObject width="84.2166748046875" height="21"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel">python magic</span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform="translate(152.70833206176758,614.5)"><g transform="translate(-21.84166717529297,-10.5)" class="label"><foreignObject width="43.68333435058594" height="21"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel">Danger</span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform="translate(272.62500381469727,614.5)"><g transform="translate(-26.51667022705078,-10.5)" class="label"><foreignObject width="53.03334045410156" height="21"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel">All Good</span></div></foreignObject></g></g></g><g class="nodes"><g class="node" style="opacity: 1;" id="ENV" transform="translate(70.05833435058594,40.5)"><rect rx="0" ry="0" x="-49.525001525878906" y="-20.5" width="99.05000305175781" height="41"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-39.525001525878906,-10.5)"><foreignObject width="79.05000305175781" height="21"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Environment</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="TEMP" transform="translate(70.05833435058594,131.5)"><rect rx="5" ry="5" x="-50.05833435058594" y="-20.5" width="100.11666870117188" height="41"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-40.05833435058594,-10.5)"><foreignObject width="80.11666870117188" height="21"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Temperature</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="FF" transform="translate(280.77083587646484,40.5)"><rect rx="0" ry="0" x="-43.44166564941406" y="-20.5" width="86.88333129882812" height="41"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-33.44166564941406,-10.5)"><foreignObject width="66.88333129882812" height="21"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Firefighter</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="MOV" transform="translate(212.66666793823242,131.5)"><rect rx="5" ry="5" x="-42.19166564941406" y="-20.5" width="84.38333129882812" height="41"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-32.19166564941406,-10.5)"><foreignObject width="64.38333129882812" height="21"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Movement</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="HR" transform="translate(348.87500381469727,131.5)"><rect rx="5" ry="5" x="-44.01667022705078" y="-20.5" width="88.03334045410156" height="41"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-34.01667022705078,-10.5)"><foreignObject width="68.03334045410156" height="21"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Heart Rate</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="MC1" transform="translate(212.66666793823242,222.5)"><polygon points="6.833333333333333,0 120.48333231608073,0 140.98333231608072,-41 -13.666666666666666,-41" transform="translate(-63.65833282470703,20.5)"></polygon><g class="label" transform="translate(0,0)"><g transform="translate(-53.65833282470703,-10.5)"><foreignObject width="107.31666564941406" height="21"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Microcontroller 1</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="MC2" transform="translate(212.66666793823242,334.5)"><polygon points="6.833333333333333,0 120.48333231608073,0 140.98333231608072,-41 -13.666666666666666,-41" transform="translate(-63.65833282470703,20.5)"></polygon><g class="label" transform="translate(0,0)"><g transform="translate(-53.65833282470703,-10.5)"><foreignObject width="107.31666564941406" height="21"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Microcontroller 2</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="PC" transform="translate(212.66666793823242,446.5)"><rect rx="0" ry="0" x="-40.78333282470703" y="-20.5" width="81.56666564941406" height="41"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-30.78333282470703,-10.5)"><foreignObject width="61.56666564941406" height="21"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Computer</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="GUI" transform="translate(212.66666793823242,558.5)"><rect rx="0" ry="0" x="-37.10833740234375" y="-20.5" width="74.2166748046875" height="41"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-27.10833740234375,-10.5)"><foreignObject width="54.2166748046875" height="21"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">SFSS GUI</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="BAD" transform="translate(152.70833206176758,670.5)"><rect rx="5" ry="5" x="-37.70000457763672" y="-20.5" width="75.40000915527344" height="41"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-27.70000457763672,-10.5)"><foreignObject width="55.40000915527344" height="21"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Warning!</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="GOOD" transform="translate(272.62500381469727,670.5)"><rect rx="5" ry="5" x="-32.21666717529297" y="-20.5" width="64.43333435058594" height="41"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-22.21666717529297,-10.5)"><foreignObject width="44.43333435058594" height="21"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Display</div></foreignObject></g></g></g></g></g></g></svg>
