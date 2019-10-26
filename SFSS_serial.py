@@ -4,11 +4,10 @@
 # Author: 			Robert Wells
 # Project Title: 	Smart Firefighter Support System
 # FileName: 		SFSS_serial.py
-# Path: 			c:\Users\wells.robert\Google Drive\School\_2019 Fall\Design 2\GUI\SFSS with Serial\SFSS_serial.py
-# Project: 			c:\Users\wells.robert\Google Drive\School\_2019 Fall\Design 2\GUI\SFSS with Serial
+# Path: 			c:\..._2019 Fall\Design 2\GUI\SFSS with Serial\SFSS_serial.py
 # Created Date: 	Friday, October 25th 2019, 17:53:41 pm
 # -----
-# Last Modified: 	Saturday, October 26th 2019, 15:08:12 pm
+# Last Modified: 	Saturday, October 26th 2019, 15:12:23 pm
 # Modified By: 		Robert Wells
 # -----
 # Copyright (c) 2019 SFSS
@@ -436,7 +435,6 @@ def showhr3graph():
 
 
 def main():
-
 
 # ---------------------------- setup window "feel" --------------------------- #
 
