@@ -8,7 +8,7 @@
 # Project: 			c:\Users\wells.robert\Google Drive\School\_2019 Fall\Design 2\GUI\SFSS with Serial
 # Created Date: 	Friday, October 25th 2019, 17:53:41 pm
 # -----
-# Last Modified: 	Friday, October 25th 2019, 18:56:44 pm
+# Last Modified: 	Friday, October 25th 2019, 19:52:03 pm
 # Modified By: 		Robert Wells
 # -----
 # Copyright (c) 2019 SFSS
@@ -19,6 +19,7 @@
 # HISTORY:
 # Date      			By		Comments
 # ----------			---		----------------------------------------------------------
+# 2019-10-25 19:10:16	RW		Commented out some imports, some housekeeping
 # 2019-10-25 17:10:16	RW		Forgot to keep logging the changes for a while..
 #                               COM port communication works
 #                               Optimized the code quite a bit to get rid of unneeded lines
@@ -41,34 +42,26 @@ import csv
 import os
 import subprocess
 import sys
-import webbrowser
-import io
-import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
-from matplotlib.ticker import MaxNLocator
-import matplotlib.animation as animation
-
 import time
+import webbrowser
 
-import random
-from random import randrange
-from random import randint
-
-from multiprocessing import Process
-from multiprocessing import Pipe
-import multiprocessing
-
-import argparse
+import matplotlib.animation as animation
+import matplotlib.pyplot as plt
+import pandas as pd
+import PySimpleGUI as sg
 import serial
 import serial.tools.list_ports
+from matplotlib.ticker import MaxNLocator
 
-import PySimpleGUI as sg
-
-
-#print = sg.Print
-#print = sg.PopupScrolled
-
+# import io
+# import argparse
+# import numpy as np
+# import random
+# from random import randrange
+# from random import randint
+# from multiprocessing import Process
+# from multiprocessing import Pipe
+# import multiprocessing
 
 # * DEPENDENCY: matplotlib 3.0.3
 # * [env conda activate seniordesigngui]
@@ -660,8 +653,8 @@ def main():
 
 # -------------------------------- EVENT LOOP -------------------------------- #
     ff1_list = []
-    ff2_list = []
-    ff3_list = []
+    #ff2_list = []
+    #ff3_list = []
 
     createLogFile('FF1.log')
     createLogFile('FF2.log')
