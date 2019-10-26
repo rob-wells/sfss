@@ -8,7 +8,7 @@
 # Project: 			c:\Users\wells.robert\Google Drive\School\_2019 Fall\Design 2\GUI\SFSS with Serial
 # Created Date: 	Friday, October 25th 2019, 17:53:41 pm
 # -----
-# Last Modified: 	Saturday, October 26th 2019, 14:45:34 pm
+# Last Modified: 	Saturday, October 26th 2019, 15:08:12 pm
 # Modified By: 		Robert Wells
 # -----
 # Copyright (c) 2019 SFSS
@@ -30,11 +30,6 @@
 ###
 
 
-# // NOTE: trying multilines in tabs instead of output
-# // NOTE: for this to work, need to change 'reroutestdout' property of the output element
-# // NOTE: also change the "print=update..."
-
-# FIXME: motor status is True all the time? check into the df
 
 # ---------------------------------- imports --------------------------------- #
 
@@ -66,29 +61,12 @@ from matplotlib.ticker import MaxNLocator
 # * DEPENDENCY: matplotlib 3.0.3
 # * [env conda activate seniordesigngui]
 
-# NOTE: p.start breaks the program
+# FIXME: motor status is True all the time? check into the df
 
-# // ? use heartpy to process the data in a loop and then plug into updating graph in new window?
-# // * use updating multiline to report hr and movement in text.  button to view updating graph in new window
-# // ?NOTE: how about running graphs in browser windows with bokeh
-# // NOTE: - ***DONE***create conda environment so that matplotlib works (3.0.3)
-
-# // TODO: add in setup window
-    # // TODO: cmd window to print ports, accept user input of correct port, connect
-# // TODO:- add menu option to initialize connection to board
-    # // TODO: - write function to connect to board
-    # TODO: - add updating 'gif' or progress meter for connection
-    # TODO: - add indicator for connection on/off
-
+# TODO: add updating 'gif' or progress meter for connection
+# TODO: add indicator for connection on/off
 # TODO: add hr sensor's built in graphing if possible
-# // TODO: add warning gradients
-    # // TODO: yellow for getting close etc
-
-    # // ? how do i make the GUI reload the csv data at xtimes/sec
-    # ? should i add a slider to increase/decrease update freq on graphs
-# TODO: - add right click menus for (raw data, initialize connection, export photo?)
-# // TODO: - sg.popup warnings for data above/below safe values
-# // TODO: add led indicators to main page to have 'at a glance' status view
+# TODO: add right click menus for (raw data, initialize connection, export photo?)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
 #                                    GLOBALS                                   #
@@ -99,8 +77,6 @@ BAUDRATE=115200
 TIMEOUT=2
 ser=serial.Serial()
 
-
-
 # ---------------------------------------------------------------------------- #
 #                                  Definitions                                 #
 # ---------------------------------------------------------------------------- #
@@ -109,6 +85,13 @@ ser=serial.Serial()
 # --------------------------- connection setup defs -------------------------- #
 
 def statusWarningPopup(ffnum, status, color):
+    """Warning popup called if values recieved is out of bounds
+
+    Args:
+        ffnum (str): string used to indicate firefighter number within popup
+        status (str): string used to indicate warning type within popup
+        color (str): string used to set the background color of the popup to differentiate warning tytpe
+    """
     # sg.PopupAutoClose('{} Warning for {}'.format(status,ffnum), auto_close_duration=2, non_blocking=True,
     # background_color= color, grab_anywhere=True, keep_on_top=False, location=(-1,-1))
     sg.popup_no_wait('{} Warning for {}'.format(status,ffnum), auto_close=True, auto_close_duration=1, non_blocking=True,
@@ -193,6 +176,11 @@ def ExecutePortList():
 # ----------------------------- file writing defs ---------------------------- #
 
 def serialToList(ser):
+    """converts recieved serial data into a list
+
+    Args:
+        ser (variable): ser, (i.e. ser = serial.Serial())
+    """
 
     decoded_parsed_rawdata = ser.readline().decode('utf-8').split()
     return(decoded_parsed_rawdata)
@@ -324,17 +312,42 @@ def movtable1():
 # ------------------------------- Warning LEDs ------------------------------- #
 
 def LEDIndicator(key=None, radius=40):
+    """draws the "LEDs" on each tab by utilizing tkinter's canvas
+
+    Args:
+        key (str, optional): indicates where to draw using the items key. Defaults to None.
+        radius (int, optional): size of the canvas. Defaults to 40.
+    
+    Returns:
+        canvas: the LED
+    """
     return sg.Graph(canvas_size=(radius, radius),
              graph_bottom_left=(-radius, -radius),
              graph_top_right=(radius, radius),
              pad=(0, 0), key=key)
 
 def SetLED(window, key, color):
+    """function to set the LED. called when a status change is experienced
+
+    Args:
+        window (None): defines which sg.window to update
+        key (str): defines which element in the window
+        color (str): what color to set the LED
+    """
     graph = window.FindElement(key)
     graph.Erase()
     graph.DrawCircle((0, 0), 20, fill_color=color, line_color=color)
 
 def setLEDStatus(w, fftabkey, maintabkey, color):
+    """this function calls SetLED to change both of a FF's LED's at once. only put here to avoid typing SetLED twice
+
+
+    Args:
+        w (none): defines which sg.Window to update
+        fftabkey (str): key value for the FF's personal LED
+        maintabkey (str): key value for the FF's LED on the 'main' tab
+        color (str): color to set the LED
+    """
     SetLED(w, fftabkey, color)
     SetLED(w, maintabkey, color)
 # ----------------------------- HEART RATE GRAPHS ---------------------------- #
@@ -424,12 +437,6 @@ def showhr3graph():
 
 def main():
 
-    # P = multiprocessing.Process(target=csvWriter, args=(portToConfig, 'ff1.csv', 'ff1'))
-    # P.start()
-
-    # ser = serial.Serial()
-    # ser.baudrate=115200
-    # ser.timeout=2
 
 # ---------------------------- setup window "feel" --------------------------- #
 
