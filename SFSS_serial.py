@@ -8,7 +8,7 @@
 # Project: 			c:\Users\wells.robert\Google Drive\School\_2019 Fall\Design 2\GUI\SFSS with Serial
 # Created Date: 	Friday, October 25th 2019, 17:53:41 pm
 # -----
-# Last Modified: 	Friday, October 25th 2019, 17:59:50 pm
+# Last Modified: 	Friday, October 25th 2019, 18:56:44 pm
 # Modified By: 		Robert Wells
 # -----
 # Copyright (c) 2019 SFSS
@@ -164,6 +164,7 @@ def ExecutePortList():
     device_found = False
     my_com_port = None
     description = None
+
     ports = list(serial.tools.list_ports.comports())
 
     for p in ports:
@@ -172,7 +173,6 @@ def ExecutePortList():
                 description = p.hwid
                 my_com_port = p.device
                 device_found = True
-
                 return(my_com_port, description, device_found)
         except:
             print('The SFSS device wasnt found :(')
@@ -181,6 +181,7 @@ def ExecutePortList():
             print("If not, refer to 'About'-'Help' from the menu above")
             break
     # print(my_comm_port)
+
 
 # def ExecutePortConfigure(command, *args):
 #     print = window.element('_SETUPOUTPUT_').Update
@@ -669,6 +670,7 @@ def main():
     while True:
         event, values = window.Read()
         popups_enabled = values['_TOGGLEPOPUPALL_']
+# ! why is popups_enabled in both 739 and 672??? ##################################################################
         #
         # if values['_TOGGLEPOPUPALL_'] == False:
         #     popups_enabled
@@ -736,7 +738,7 @@ def main():
                     break
                 elif file_update_ff1:
                     popups_enabled = values['_TOGGLEPOPUPALL_']
-
+# ! why is popups_enabled in both 739 and 672??? #####################################################################
                     try:
                         time.sleep(.1)
                         # createLogFile('ff1.log')
@@ -833,6 +835,7 @@ def main():
                         dataError('FF1')
                 #ser.flushInput()
                 # time.sleep(.1)
+
 # ------------------------------- FIREFIGHTER2 ------------------------------- #
 
     # ------------------------------- updating FF2 ------------------------------- #
@@ -995,59 +998,36 @@ def main():
 
         if event == 'Check COM Ports':
             # foo = ExecutePortList('powershell', '[System.IO.Ports.SerialPort]::getportnames()')
-            print('Searching for your device...')
-            foo, desc, found = ExecutePortList()
-            # print("Searching... \n ... \n >>> Your COM port is: {} \n >>> Select it from the ComboBox below,\n >>> then click 'Configure COM Port'".format(foo.decode("utf-8")))
-            if found:
-                print(' >>> SFSS Found!')
-                print(' >>> Device: ', desc)
-                print(" \n >>> Your COM port is: {} \n >>> Click 'Configure COM Port'".format(foo))
-            if not found:
-                print(" >>> Device not found. Refer to the 'Help' section in the menu above")
+            print('Searching for your device...\n')
+            try:
+                foo, desc, found = ExecutePortList()
+
+                if found:
+                    print(' >>> SFSS Found!')
+                    print(' >>> Device: ', desc)
+                    print(" \n >>> Your COM port is: {} \n >>> Click 'Configure COM Port'".format(foo))
+                if not found:
+                    print(" >>> Device not found. Refer to the 'Help' section in the menu above")
+            except TypeError:
+                print("We're having trouble finding your SFSS")
+                print("Are you sure it's connected?\n")
             window.Refresh()
 
         if event == 'Configure COM Port':
-            foo, desc, found = ExecutePortList()
-            ser = serial.Serial()
-            ser.baudrate=BAUDRATE
-            ser.timeout=TIMEOUT
+            try:
+                foo, desc, found = ExecutePortList()
+                ser = serial.Serial()
+                ser.baudrate=BAUDRATE
+                ser.timeout=TIMEOUT
 
-            if found:
-                try:
-                    #portToConfig = foo
-                    print('\nConfiguring', foo)
-                    ser.port = foo
-                    if not ser.is_open:
-                        ser.open()
-                    print('\n >>> The port opened is: {}'.format(ser.name))
-                    print(' >>> The Baudrate is: {}'.format(ser.baudrate))
-                    print(' >>> The Bytesize is: {}'.format(ser.bytesize))
-                    print(' >>> The Parity is: {}'.format(ser.parity))
-                    print(' >>> Is it readable?: {}'.format(ser.readable()))
-                    print(' >>> Is the port really open??: {}'.format(ser.is_open))
-                    print(' >>> SUCESS!!')
-                    print(' >>> You have been configured to work with the SFSS!')
-                    ser.close()
-                    pass
-                except:
-                    print(' >>> Unable to automatically configure your port.')
-                    print(" >>> Select {} in the combobox and click 'Configure COM Port'".format(foo))
-                    pass
-
-            if not found:
-                if values['_LISTBOX_'] == '-------':
-                    print('\n >>> Your device is unable to be configured automatically')
-                    print(" >>> 1. Select {} from the ComboBox below".format(foo))
-                    print(" >>> 2. Click 'Configure COM Port'")
-                try:
-                    if values['_LISTBOX_'] is not '-------':
-                        portToConfig = values['_LISTBOX_']
-                        print('\n >>> The port you have selected is: ', portToConfig)
-                        print('\nConfiguring', portToConfig)
-                        ser.port = portToConfig
+                if found:
+                    try:
+                        #portToConfig = foo
+                        print('\nConfiguring', foo)
+                        ser.port = foo
                         if not ser.is_open:
                             ser.open()
-                        print(' >>> The port opened is: {}'.format(ser.name))
+                        print('\n >>> The port opened is: {}'.format(ser.name))
                         print(' >>> The Baudrate is: {}'.format(ser.baudrate))
                         print(' >>> The Bytesize is: {}'.format(ser.bytesize))
                         print(' >>> The Parity is: {}'.format(ser.parity))
@@ -1057,20 +1037,39 @@ def main():
                         print(' >>> You have been configured to work with the SFSS!')
                         ser.close()
                         pass
-                except:
-                    porterror()
+                    except:
+                        print(' >>> Unable to automatically configure your port.')
+                        print(" >>> Select {} in the combobox and click 'Configure COM Port'".format(foo))
+                        pass
+                    
+                if not found:
+                    if values['_LISTBOX_'] == '-------':
+                        print('\n >>> Your device is unable to be configured automatically')
+                        print(" >>> 1. Select {} from the ComboBox below".format(foo))
+                        print(" >>> 2. Click 'Configure COM Port'")
+                    try:
+                        if values['_LISTBOX_'] is not '-------':
+                            portToConfig = values['_LISTBOX_']
+                            print('\n >>> The port you have selected is: ', portToConfig)
+                            print('\nConfiguring', portToConfig)
+                            ser.port = portToConfig
+                            if not ser.is_open:
+                                ser.open()
+                            print(' >>> The port opened is: {}'.format(ser.name))
+                            print(' >>> The Baudrate is: {}'.format(ser.baudrate))
+                            print(' >>> The Bytesize is: {}'.format(ser.bytesize))
+                            print(' >>> The Parity is: {}'.format(ser.parity))
+                            print(' >>> Is it readable?: {}'.format(ser.readable()))
+                            print(' >>> Is the port really open??: {}'.format(ser.is_open))
+                            print(' >>> SUCESS!!')
+                            print(' >>> You have been configured to work with the SFSS!')
+                            ser.close()
+                            pass
+                    except:
+                        porterror()
+            except:
+                porterror()
 
-
-        # print('\t >>> Configuring', ser.name, '\n')
-        # print('\t >>> The port opened is:\t\t\t\t ', ser.name)
-        # print('\t >>> The baudrate is:\t\t\t\t ', ser.baudrate)
-        # print('\t >>> The bytesize is:\t\t\t\t ', ser.bytesize)
-        # print('\t >>> The parity is:\t\t\t\t ', ser.parity)
-        # print('\t >>> Is it readable?:\t\t\t\t ', ser.readable())
-        # print('\t >>> Is it writable?:\t\t\t\t ', ser.writable())
-        # print('\t >>> Is the port really open?:\t\t ', ser.is_open, '\n')
-        # print('\n\t >>> SUCESS!')
-        # print('\t >>> Your COM Port has been configured to work with the SFSS!')
 
 # ------------------------------- menu choices ------------------------------- #
 
