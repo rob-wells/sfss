@@ -8,7 +8,7 @@
 # Project: 			c:\Users\wells.robert\Google Drive\School\_2019 Fall\Design 2\GUI\SFSS with Serial
 # Created Date: 	Friday, October 25th 2019, 17:53:41 pm
 # -----
-# Last Modified: 	Friday, October 25th 2019, 19:52:03 pm
+# Last Modified: 	Saturday, October 26th 2019, 14:45:34 pm
 # Modified By: 		Robert Wells
 # -----
 # Copyright (c) 2019 SFSS
@@ -192,24 +192,6 @@ def ExecutePortList():
 
 # ----------------------------- file writing defs ---------------------------- #
 
-# def FileWriter():
-#     filein=open('./FF1_testwrite.csv','w')
-#     i=0
-#     j=0
-#     while True:
-#         i+=1
-#         j+=1
-#         t=round(random.uniform(0.7,1.5), 6)
-#         #j=i
-#         mov=randint(0,1)
-#         f=randint(0,1)
-#         h=round(random.uniform(0.0,1.0), 6)
-#         mot=randrange(0,1)
-#         data = filein.write(str(i)+','+'"b'+str(j)+','+str(t)+','+str(mov)+','+str(f)+','+str(h)+','+str(mot)+'"'+'\n')
-#         print('wrote data')
-#         time.sleep(1)
-#         filein.flush()
-
 def serialToList(ser):
 
     decoded_parsed_rawdata = ser.readline().decode('utf-8').split()
@@ -226,23 +208,6 @@ def listToDataFrame(datalist):
 
 def logAllData(dataframe, ffnumber):
     dataframe.to_csv(ffnumber, sep=',', float_format='%04f', mode='a', header=None)
-
-# def csvWriter(portname, filename, ffnumber):
-
-#     print('writing data for: ', ffnumber)
-#     with serial.Serial(portname, 115200, timeout=2) as ser, open(filename, 'w+b') as csv_file:
-#         # if not ser.is_open:
-#         #     # ser.open()
-#         #i=0
-#         while True:
-#             #i+=1
-#             x=ser.readline()
-#             #print(i, x)
-#             #data = [i,x]
-#             data = x
-#             csv_file.write(data)
-#             csv_file.flush()
-#             time.sleep(1)
 
 def createLogFile(filename):
     """creates an initial log file, and places "logheader" at the top
