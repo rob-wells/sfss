@@ -7,7 +7,7 @@
 # Path: 			c:\..._2019 Fall\Design 2\GUI\SFSS with Serial\SFSS_serial.py
 # Created Date: 	Friday, October 25th 2019, 17:53:41 pm
 # -----
-# Last Modified: 	Saturday, October 26th 2019, 15:12:23 pm
+# Last Modified: 	Saturday, October 26th 2019, 20:35:39 pm
 # Modified By: 		Robert Wells
 # -----
 # Copyright (c) 2019 SFSS
@@ -316,7 +316,7 @@ def LEDIndicator(key=None, radius=40):
     Args:
         key (str, optional): indicates where to draw using the items key. Defaults to None.
         radius (int, optional): size of the canvas. Defaults to 40.
-    
+
     Returns:
         canvas: the LED
     """
@@ -637,7 +637,7 @@ def main():
         #
         # if values['_TOGGLEPOPUPALL_'] == False:
         #     popups_enabled
-        if event == None or event == 'Exit':
+        if event in (None, 'Exit'):
             if ser.is_open:
                 ser.close()
             #P.terminate()
@@ -1042,15 +1042,14 @@ def main():
             # ----------- Subprocess to launch browser and take to SFSS github ----------- #
             CHROME = r"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"
             FIREFOX = r"C:\Program Files\Mozilla Firefox\firefox.exe"
-            github = "https://github.com/sfss-rw/sfss/"
-            layout = [[sg.Text('GUIDE: https://github.com/sfss-rw/sfss/', key='_TEXT_')],
-                    [sg.Input('https://github.com/sfss-rw/sfss/', do_not_clear=True, key='_URL_')],
+            github = "https://github.com/rob-wells/sfss/"
+            layout = [[sg.Text('GUIDE: https://github.com/rob-wells/sfss/', key='_TEXT_')],
+                    [sg.Input('https://github.com/rob-wells/sfss/', do_not_clear=True, key='_URL_')],
                     [sg.Button('Default', bind_return_key=True, focus=True), sg.Button('Chrome'), sg.Button('Firefox')]]
             windowguide = sg.Window("github: User's Guide", layout)
             while True:             # Event Loop
                 event, values = windowguide.Read()
-                print(event, values)
-                if event is None or event == 'Exit':
+                if event in (None, 'Exit'):
                     break
                 if event == 'Chrome':
                     sp1 = subprocess.Popen([CHROME, values['_URL_']], shell=True, stdout=subprocess.PIPE,
