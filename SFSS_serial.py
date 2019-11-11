@@ -7,17 +7,24 @@
 # Path: 			c:\..._2019 Fall\Design 2\GUI\SFSS with Serial\SFSS_serial.py
 # Created Date: 	Friday, October 25th 2019, 17:53:41 pm
 # -----
-# Last Modified: 	Saturday, October 26th 2019, 20:35:39 pm
+# Last Modified: 	Monday, November 11th 2019, 13:23:41 pm
 # Modified By: 		Robert Wells
 # -----
 # Copyright (c) 2019 SFSS
-# 
+#
 # GNU General Public License v3.0
 # https://spdx.org/licenses/LGPL-3.0-only.html
 # -----
 # HISTORY:
 # Date      			By		Comments
 # ----------			---		----------------------------------------------------------
+# 2019-11-11 13:11:80	RW		inserted motor status popup on kris's request [motorWarningPopup]
+#                               waiting to test [motorWarningPopup] since the board is not outputting data in the correct format
+#                               added break after dataErrorPopup to stop the while loop if there's a data error
+# 2019-11-06 11:11:93	RW		added datetime to log file, got rid of 'bool' value for motor (it was showing true when false..?)
+#                               added 'index=False' to [logalldata] to set up for graphing
+#                               added "newline=''" to [createlogfile] to stop creating a newline after writing header
+#
 # 2019-10-25 19:10:16	RW		Commented out some imports, some housekeeping
 # 2019-10-25 17:10:16	RW		Forgot to keep logging the changes for a while..
 #                               COM port communication works
@@ -38,6 +45,8 @@ import subprocess
 import sys
 import time
 import webbrowser
+# from datetime import datetime
+import datetime as dt
 
 import matplotlib.animation as animation
 import matplotlib.pyplot as plt
@@ -60,11 +69,12 @@ from matplotlib.ticker import MaxNLocator
 # * DEPENDENCY: matplotlib 3.0.3
 # * [env conda activate seniordesigngui]
 
-# FIXME: motor status is True all the time? check into the df
+# // FIXME: motor status is True all the time? check into the df
 
+# TODO: test motorWarningPopup when board code is updated
 # TODO: add updating 'gif' or progress meter for connection
 # TODO: add indicator for connection on/off
-# TODO: add hr sensor's built in graphing if possible
+# // TODO: add hr sensor's built in graphing if possible
 # TODO: add right click menus for (raw data, initialize connection, export photo?)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
@@ -72,9 +82,9 @@ from matplotlib.ticker import MaxNLocator
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
 
 # serial globals
-BAUDRATE=115200
-TIMEOUT=2
-ser=serial.Serial()
+# BAUDRATE=115200
+# TIMEOUT=2
+# ser=serial.Serial()
 
 # ---------------------------------------------------------------------------- #
 #                                  Definitions                                 #
@@ -97,8 +107,11 @@ def statusWarningPopup(ffnum, status, color):
     background_color= color, grab_anywhere=True, keep_on_top=False, location=(-1,-1))
 
 
-def dataError(ffnum):
+def dataErrorPopup(ffnum):
     sg.PopupAutoClose('Something went wrong', "There was an error with {}'s data".format(ffnum), non_blocking=True, auto_close_duration=2)
+
+def motorWarningPopup(m_warn1, m_warn2=None):
+    sg.PopupAutoClose('Motor Warning', "Warning: These sensors [{}, {}] are not generating valid data".format(m_warn1,m_warn2))
 
 def porterror():
     sg.PopupAutoClose('Something went wrong', 'Make sure you have the correct port selected in the list box', non_blocking=True, auto_close_duration=2)
@@ -107,7 +120,7 @@ def porterror():
     # def ExecutePortList(command, *args):
     #     """executes commands through cmd.exe, used here to call powershell to get a list of available COM ports
 
-    
+
     #     Args:
     #         command (string): [command to be passed to cmd.exe]
     #     """
@@ -121,7 +134,7 @@ def porterror():
     #             print(err.decode("utf-8"))
     #     except:
     #         sg.PopupError('executeportlist error')
-    
+
     #     return (out)
 
 def ExecutePortList():
@@ -182,19 +195,23 @@ def serialToList(ser):
     """
 
     decoded_parsed_rawdata = ser.readline().decode('utf-8').split()
+    ser.flushInput()
+    # decoded_parsed_rawdata_time = (date_time + decoded_parsed_rawdata)
     return(decoded_parsed_rawdata)
 
 def listToDataFrame(datalist):
     header = ['microcntr', 'temp', 'movement', 'fall', 'heartrate', 'motor']
-    bool_columns = ['motor']
+    # bool_columns = ['motor']
     float_columns = ['temp', 'movement', 'fall', 'heartrate']
     dataframe = pd.DataFrame([datalist], columns = header, index=None)
-    dataframe[bool_columns] = dataframe[bool_columns].astype(bool)
+    # dataframe[bool_columns] = dataframe[bool_columns].astype(bool)
     dataframe[float_columns] = dataframe[float_columns].astype(float)
+    #dataframe.index = pd.Series([dt.datetime.now()] * len(dataframe)) ##adds timestamp to dataframe and sets as index
     return(dataframe)
 
+# ! setting date time for index############################################################
 def logAllData(dataframe, ffnumber):
-    dataframe.to_csv(ffnumber, sep=',', float_format='%04f', mode='a', header=None)
+    dataframe.to_csv(ffnumber, sep=',', float_format='%04f', mode='a', header=None, index=False)
 
 def createLogFile(filename):
     """creates an initial log file, and places "logheader" at the top
@@ -203,13 +220,18 @@ def createLogFile(filename):
         filename (string): name for the file
     """
     # setting header for the log csv
-    logheader = ['i', 'microcntr', 'temp', 'movement', 'fall', 'heartrate', 'motor']
-    with open(filename,'w') as csv_file:
+    # logheader = ['i', 'microcntr', 'temp', 'movement', 'fall', 'heartrate', 'motor']
+    logheader = ['microcntr', 'temp', 'movement', 'fall', 'heartrate', 'motor']
+    logfile_name=filename+"_"+str(dt.datetime.now().strftime("%Y-%m-%d %H%M%S"))+'_temp.log'                                     # ! added dt.datetime.now() moved function call to before while loop after main
+    with open(logfile_name,'w', newline='') as csv_file:
         csv_writer = csv.writer(csv_file)
         csv_writer.writerow(logheader)
-
+        return logfile_name
         #print('done with header')
-        
+
+# def keeplog(log):
+#     df.to_csv(datetime.now()+log,sep=',', float_format='%04f', mode='a', header=None, index=False)
+#     with open(log)
 # ----------------------------- HEART RATE TABLE ----------------------------- #
 
 def hrtable1():
@@ -255,14 +277,14 @@ def hrtable1():
     #     hr_table_layout = [[sg.Table(values=data, headings = header_list, display_row_numbers=False, auto_size_columns=True, num_rows=min(25,len(data)))]]
 
     #     hrtable = sg.Window('FF1 HR Table', grab_anywhere=False)
-    
+
     #     while True:
     #         event, values = hrtable.Layout(hr_table_layout).Read()
     #         if event in(None, 'Exit'):
     #             break
         #pass
-    
-    
+
+
     # def hrtable1():
     #     hr=pd.read_csv('data1.csv', names=['Time', 'HR'])
     #     if hr == None:
@@ -350,24 +372,65 @@ def setLEDStatus(w, fftabkey, maintabkey, color):
     SetLED(w, fftabkey, color)
     SetLED(w, maintabkey, color)
 # ----------------------------- HEART RATE GRAPHS ---------------------------- #
+# def showHrGraph(datalist):
 
-# def animate1(i):
-    # fig = plt.figure()
-    # ax1 = fig.add_subplot(1,1,1)
-    # pullData = open("data1.csv","r").read()
-    # dataArray = pullData.split('\n')
-    # xar = []
-    # yar = []
-    # for eachLine in dataArray:
-    #     if len(eachLine)>1:
-    #         x,y = eachLine.split(',')
-    #         xar.append(int(x))
-    #         yar.append(int(y))
-    # ax1.clear()
-    # ax1.plot(xar,yar)
-    # ani = animation.FuncAnimation(fig, animate, interval=1000)
-    # plt.show()
+#     # Parameters
+#     x_len = 200         # Number of points to display
+#     y_range = [0, 250]  # Range of possible Y values to display
 
+#     # Create figure for plotting
+#     fig = plt.figure()
+#     ax = fig.add_subplot(1, 1, 1)
+#     xs = list(range(0, 200))
+#     ys = [0] * x_len
+#     ax.set_ylim(y_range)
+
+#     # Initialize communication with TMP102
+#     #tmp102.init()
+
+#     # Create a blank line. We will update the line in animate
+#     line, = ax.plot(xs, ys)
+
+#     # Add labels
+#     plt.title('Heart Rate Over Time')
+#     plt.xlabel('Samples')
+#     plt.ylabel('HR (BPM)')
+
+# # This function is called periodically from FuncAnimation
+#     def animate(i, ys):
+
+#         # Read temperature (Celsius) from TMP102
+#         #temp_c = round(tmp102.read_temp(), 2)
+#         hr = datalist[-2]
+#         # hr = datalist
+#         # Add y to list
+#         ys.append(hr)
+
+#         # Limit y list to set number of items
+#         ys = ys[-x_len:]
+
+#         # Update line with new Y values
+#         line.set_ydata(ys)
+
+#         return line,
+
+# # below is function call
+# # Set up plot to call animate() function periodically
+#     ani = animation.FuncAnimation(fig,
+#         animate,
+#         fargs=(ys,),
+#         interval=50,
+#         blit=True)
+#     plt.show(block=False)
+
+    # sg.SetOptions(auto_size_buttons=True)
+
+    # hr_layout = [[sg.Table(values=data, headings=header_list, display_row_numbers=False, auto_size_columns=True, num_rows=min(25,len(data)))]]
+    # hr_window = sg.Window('Heartrate', grab_anywhere=False)
+    # while True:
+    #     event, values = hrwindow.Layout(hr_table_layout).Read()
+    #     if event in(None, 'Exit'):
+    #         break
 def showhr2graph():
     x=[]
     y=[]
@@ -418,13 +481,13 @@ def showhr3graph():
     ax.xaxis.set_major_locator(MaxNLocator(10))
     ax.spines['right'].set_color('none')
     ax.spines['top'].set_color('none')
-    
+
     plt.plot(x,y, label = 'HR')
     plt.axhline(y  = 230, color = 'red', linestyle = '--', label = 'Danger')
     plt.xlabel(var1)
     plt.ylabel(var2)
     plt.title(' FireFighter 3: Heart Rate')
-    
+
 
     plt.legend()
     plt.show()
@@ -435,6 +498,11 @@ def showhr3graph():
 
 
 def main():
+    BAUDRATE=115200 # ! trying moving these here to  get rid of called before assignment
+    TIMEOUT=2
+    ser=serial.Serial()
+
+
 
 # ---------------------------- setup window "feel" --------------------------- #
 
@@ -488,17 +556,17 @@ def main():
 
     cola1_frame_layout = [
         [sg.Text("Heart Rate", font=('calibri', 12), justification='right'),
-        LEDIndicator('_FF1HRLED_'), sg.Multiline(font=('calibri', 15, 'bold'), disabled=True,  key='_HRTEXT1_'),
-        sg.Text('Max Recorded HR:', justification='right'), sg.Multiline(font=('calibri', 15, 'bold'), disabled=True,  key='_MAXHRTEXT1_'),
-        sg.Button('FF1 RAW Heart Rate', key='_RAWHR1_')]
+        LEDIndicator('_FF1HRLED_'), sg.Multiline(size=(10,1),font=('calibri', 15, 'bold'), disabled=True, key='_HRTEXT1_'),
+        sg.Text('Max Recorded HR:', justification='right'), sg.Multiline(size=(10,1), font=('calibri', 15, 'bold'), disabled=True,  key='_MAXHRTEXT1_'),
+        sg.Button('Plot HR', key='_PLOTHR1_')]
         ]
 
     cola1 = [[sg.Frame('Heart Rate', cola1_frame_layout, element_justification='center')]]
 
     cola2_frame_layout = [
         [sg.Text('Movement', font=('calibri', 12), justification='right'),
-        LEDIndicator('_FF1MOVLED_'), sg.Multiline(font=('calibri', 15, 'bold'), disabled=True,  key='_MOVTEXT1_'),
-        sg.Text('Movement Warnings:', justification='right'), sg.Multiline(font=('calibri', 15, 'bold'), disabled=True,  key='_MOVWARN1_'),
+        LEDIndicator('_FF1MOVLED_'), sg.Multiline(size=(10,1), font=('calibri', 15, 'bold'), disabled=True,  key='_MOVTEXT1_'),
+        sg.Text('Movement Warnings:', justification='right'), sg.Multiline(size=(10,1), font=('calibri', 15, 'bold'), disabled=True,  key='_MOVWARN1_'),
         sg.Button('FF1 RAW Movement', key='_RAWMOV1_')]
     ]
 
@@ -506,8 +574,8 @@ def main():
 
     cola3_frame_layout = [
         [sg.Text('Temperature', font=('calibri', 12), justification='right'),
-        LEDIndicator('_FF1TEMPLED_'), sg.Multiline(font=('calibri', 15, 'bold'), disabled=True,  key='_TEMPTEXT1_'),
-        sg.Text('Temperature Warnings:', justification='right'), sg.Multiline(font=('calibri', 15, 'bold'), disabled=True,  key='_TEMPWARN1_'),
+        LEDIndicator('_FF1TEMPLED_'), sg.Multiline(size=(10,1), font=('calibri', 15, 'bold'), disabled=True,  key='_TEMPTEXT1_'),
+        sg.Text('Temperature Warnings:', justification='right'), sg.Multiline(size=(10,1), font=('calibri', 15, 'bold'), disabled=True,  key='_TEMPWARN1_'),
         sg.Button('FF1 RAW Temperature', key='_RAWTEMP1_')]
     ]
 
@@ -516,17 +584,17 @@ def main():
 
     colb1_frame_layout = [
         [sg.Text("Heart Rate", font=('calibri', 12, 'bold'), justification='right'),
-        LEDIndicator('_FF2HRLED_'), sg.Multiline(font=('calibri', 15, 'bold'), disabled=True,  key='_HRTEXT2_'),
-        sg.Text('Max Recorded HR:', justification='right'), sg.Multiline(font=('calibri', 15, 'bold'), disabled=True,  key='_MAXHRTEXT2_'),
-        sg.ReadButton('FF2 RAW Heart Rate', key='_RAWHR2_')]
+        LEDIndicator('_FF2HRLED_'), sg.Multiline(size=(10,1), font=('calibri', 15, 'bold'), disabled=True,  key='_HRTEXT2_'),
+        sg.Text('Max Recorded HR:', justification='right'), sg.Multiline(size=(10,1), font=('calibri', 15, 'bold'), disabled=True,  key='_MAXHRTEXT2_'),
+        sg.ReadButton('Plot HR', key='_PLOTHR2_')]
     ]
 
     colb1 = [[sg.Frame('Heart Rate', colb1_frame_layout)]]
 
     colb2_frame_layout = [
         [sg.Text('Movement', font=('calibri', 12), justification='right'),
-        LEDIndicator('_FF2MOVLED_'), sg.Multiline(font=('calibri', 15, 'bold'), disabled=True,  key='_MOVTEXT2_'),
-        sg.Text('Movement Warnings:', justification='right'), sg.Multiline(font=('calibri', 15, 'bold'), disabled=True,  key='_MOVWARN2_'),
+        LEDIndicator('_FF2MOVLED_'), sg.Multiline(size=(10,1), font=('calibri', 15, 'bold'), disabled=True,  key='_MOVTEXT2_'),
+        sg.Text('Movement Warnings:', justification='right'), sg.Multiline(size=(10,1), font=('calibri', 15, 'bold'), disabled=True,  key='_MOVWARN2_'),
         sg.Button('FF2 RAW Movement', key='_RAWMOV2_')]
     ]
 
@@ -534,8 +602,8 @@ def main():
 
     colb3_frame_layout = [
         [sg.Text('Temperature', font=('calibri', 12), justification='right'),
-        LEDIndicator('_FF2TEMPLED_'), sg.Multiline(font=('calibri', 15, 'bold'), disabled=True,  key='_TEMPTEXT2_'),
-        sg.Text('Temperature Warnings:', justification='right'), sg.Multiline(font=('calibri', 15, 'bold'), disabled=True,  key='_TEMPWARN2_'),
+        LEDIndicator('_FF2TEMPLED_'), sg.Multiline(size=(10,1), font=('calibri', 15, 'bold'), disabled=True,  key='_TEMPTEXT2_'),
+        sg.Text('Temperature Warnings:', justification='right'), sg.Multiline(size=(10,1), font=('calibri', 15, 'bold'), disabled=True,  key='_TEMPWARN2_'),
         sg.Button('FF2 RAW Temp', key='_RAWTEMP2_')]
     ]
 
@@ -543,17 +611,17 @@ def main():
 
     colc1_frame_layout = [
         [sg.Text("Heart Rate", font=('calibri', 12), justification='right'),
-        LEDIndicator('_FF3HRLED_'), sg.Multiline(font=('calibri', 15, 'bold'), disabled=True,  key='_HRTEXT3_'),
-        sg.Text('Max Recorded HR:', justification='right'), sg.Multiline(font=('calibri', 15, 'bold'), disabled=True,  key='_MAXHRTEXT3_'),
-        sg.ReadButton('FF3 RAW Heart Rate', key='_RAWHR3_')]
+        LEDIndicator('_FF3HRLED_'), sg.Multiline(size=(10,1), font=('calibri', 15, 'bold'), disabled=True,  key='_HRTEXT3_'),
+        sg.Text('Max Recorded HR:', justification='right'), sg.Multiline(size=(10,1), font=('calibri', 15, 'bold'), disabled=True,  key='_MAXHRTEXT3_'),
+        sg.ReadButton('Plot HR', key='_PLOTHR3_')]
     ]
 
     colc1 = [[sg.Frame('Heart Rate', colc1_frame_layout)]]
 
     colc2_frame_layout = [
         [sg.Text('Movement', font=('calibri', 12), justification='right'),
-        LEDIndicator('_FF3MOVLED_'), sg.Multiline(font=('calibri', 15, 'bold'), disabled=True,  key='_MOVTEXT3_'),
-        sg.Text('Movement Warnings:', justification='right'), sg.Multiline(font=('calibri', 15, 'bold'), disabled=True,  key='_MOVWARN3_'),
+        LEDIndicator('_FF3MOVLED_'), sg.Multiline(size=(10,1), font=('calibri', 15, 'bold'), disabled=True,  key='_MOVTEXT3_'),
+        sg.Text('Movement Warnings:', justification='right'), sg.Multiline(size=(10,1), font=('calibri', 15, 'bold'), disabled=True,  key='_MOVWARN3_'),
         sg.Button('FF3 RAW Movement', key='_RAWMOV3_')]
     ]
 
@@ -561,8 +629,8 @@ def main():
 
     colc3_frame_layout = [
         [sg.Text('Temperature', font=('calibri', 12), justification='right'),
-        LEDIndicator('_FF3TEMPLED_'), sg.Multiline(font=('calibri', 15, 'bold'), disabled=True,  key='_TEMPTEXT3_'),
-        sg.Text('Temperature Warnings:', justification='right'), sg.Multiline(font=('calibri', 15, 'bold'), disabled=True,  key='_TEMPWARN3_'),
+        LEDIndicator('_FF3TEMPLED_'), sg.Multiline(size=(10,1), font=('calibri', 15, 'bold'), disabled=True,  key='_TEMPTEXT3_'),
+        sg.Text('Temperature Warnings:', justification='right'), sg.Multiline(size=(10,1), font=('calibri', 15, 'bold'), disabled=True,  key='_TEMPWARN3_'),
         sg.Button('FF3 RAW Temp', key='_RAWTEMP3_')]
     ]
 
@@ -626,52 +694,51 @@ def main():
     #ff2_list = []
     #ff3_list = []
 
-    createLogFile('FF1.log')
-    createLogFile('FF2.log')
-    createLogFile('FF3.log')
+    ff1_logfile = createLogFile('FF1')
+    #ff2 = createLogFile('FF2') # NOTE: need to add this to ff
+    #ff3 = createLogFile('FF3') # NOTE: need to add this to ff
 
     while True:
         event, values = window.Read()
-        popups_enabled = values['_TOGGLEPOPUPALL_']
-# ! why is popups_enabled in both 739 and 672??? ##################################################################
+        # popups_enabled = values['_TOGGLEPOPUPALL_']
+# // ! why is popups_enabled in both 739 and 672??? ##################################################################
         #
         # if values['_TOGGLEPOPUPALL_'] == False:
         #     popups_enabled
         if event in (None, 'Exit'):
-            if ser.is_open:
-                ser.close()
-            #P.terminate()
-            #Pff1.terminate()
+            #if ser.is_open:
+            ser.close()
+            # keeplog(ff1_log)
             break
 
 # ------------------------------ showing graphs ------------------------------ #
 
-        if event == '_HRGRAPH1_':
-            plt.ion()
-            plt.show()
-            fig = plt.figure()
-            ax1 = fig.add_subplot(1,1,1)
-            def animate(i):
-                pullData = open("data1.csv","rb").read()
-                dataArray = pullData.split('\n')
-                xar = []
-                yar = []
-                for eachLine in dataArray:
-                    if len(eachLine)>1:
-                        x,y = eachLine.split(',')
-                        xar.append(int(x))
-                        yar.append(int(y))
-                ax1.clear()
-                ax1.plot(xar,yar)
-            ani = animation.FuncAnimation(fig, animate, interval=1000)
-            # plt.ion()
-            # plt.show()
-            plt.draw()
-            plt.pause(.1)
-        if event == '_HRGRAPH2_':
-            showhr2graph()
-        if event == '_HRGRAPH3_':
-            showhr3graph()
+        # if event == '_HRGRAPH1_':
+        #     plt.ion()
+        #     plt.show()
+        #     fig = plt.figure()
+        #     ax1 = fig.add_subplot(1,1,1)
+        #     def animate(i):
+        #         pullData = open("data1.csv","rb").read()
+        #         dataArray = pullData.split('\n')
+        #         xar = []
+        #         yar = []
+        #         for eachLine in dataArray:
+        #             if len(eachLine)>1:
+        #                 x,y = eachLine.split(',')
+        #                 xar.append(int(x))
+        #                 yar.append(int(y))
+        #         ax1.clear()
+        #         ax1.plot(xar,yar)
+        #     ani = animation.FuncAnimation(fig, animate, interval=1000)
+        #     # plt.ion()
+        #     # plt.show()
+        #     plt.draw()
+        #     plt.pause(.1)
+        # if event == '_HRGRAPH2_':
+        #     showhr2graph()
+        # if event == '_HRGRAPH3_':
+        #     showhr3graph()
 
 # ---------------------------------------------------------------------------- #
 #                      warning LEDs and outputting status                      #
@@ -692,38 +759,121 @@ def main():
             while True:
                 event, values = window.Read(timeout=200)
 
-                if event is None:
+                if event in(None, 'Exit'):
                     ser.close()
                     break
+
                 elif event == '_STOPUPTAB1_' or event=='_TABDEFAULTSTOPUP_':
                     file_update_ff1 = not file_update_ff1
                     ser.close()
                     break
+
                 elif file_update_ff1:
                     popups_enabled = values['_TOGGLEPOPUPALL_']
-# ! why is popups_enabled in both 739 and 672??? #####################################################################
                     try:
-                        time.sleep(.1)
+                        time.sleep(.01)
                         # createLogFile('ff1.log')
                         ff1_list = serialToList(ser)
+                        ff1_hr_list = ff1_list[-2]
+                        print(ff1_list)
+                        print(ff1_hr_list)
                         df1 = listToDataFrame(ff1_list)
-                        logAllData(df1, 'ff1.log')
+                        logAllData(df1, ff1_logfile)
 
 
-                        # ------------ strip the csv of quotes & parse the it into columns ----------- #
+                        # keeplog(ff1_log)
 
+                        # ff1_hr_graph_list =
+                        motor_status_1 = df1['motor'].iloc[0]
                         last_row_display_1h = df1['heartrate'].iloc[0]
                         window['_HRTEXT1_'].Update(df1['heartrate'].iloc[0])
+
+    # ------------------------------- FF1 hr graph ------------------------------- #
+
+                        # if event == '_PLOTHR1_':            # ! try creating a window for this process like the old cmd window
+                        #     # showHrGraph(ff1_list)
+
+                        #     # Parameters
+                        #     # popups_enabled=False
+                        #     x_len = 200         # Number of points to display
+                        #     y_range = [0, 250]  # Range of possible Y values to display
+
+                        #     # Create figure for plotting
+                        #     fig = plt.figure()
+                        #     ax = fig.add_subplot(1, 1, 1)
+                        #     xs = list(range(0, 200))
+                        #     ys = [0] * x_len
+                        #     ax.set_ylim(y_range)
+
+                        #     # Initialize communication with TMP102
+                        #     #tmp102.init()
+
+                        #     # Create a blank line. We will update the line in animate
+                        #     line, = ax.plot(xs, ys)
+
+                        #     # Add labels
+                        #     plt.title('Heart Rate Over Time')
+                        #     plt.xlabel('Samples')
+                        #     plt.ylabel('HR (BPM)')
+
+                        # # This function is called periodically from FuncAnimation
+                        #     def animate(i, ys):
+
+                        #         # Read temperature (Celsius) from TMP102
+                        #         #temp_c = round(tmp102.read_temp(), 2)
+                        #         hr = int(ff1_list[-2])
+                        #         # hr = ff1_hr_list
+                        #         # Add y to list
+                        #         ys.append(hr)
+
+                        #         # Limit y list to set number of items
+                        #         ys = ys[-x_len:]
+
+                        #         # Update line with new Y values
+                        #         line.set_ydata(ys)
+
+                        #         return line,
+
+                        # # below is function call
+                        # # Set up plot to call animate() function periodically
+                        #     ani = animation.FuncAnimation(fig,
+                        #         animate,
+                        #         fargs=(ys,),
+                        #         interval=50,
+                        #         blit=True)
+                        #     plt.show(block=False)
+                        # else:
+                        #     pass
+
+    # ------------------------------- update maxhr ------------------------------- #
+
                         if  values['_HRTEXT1_'] > values['_MAXHRTEXT1_']:
                             window['_MAXHRTEXT1_'].Update(values['_HRTEXT1_'])
                         else:
                             pass
 
+    # ---------------------------- update motor status --------------------------- #
+    #! cant test yet, may need to try motor_status_1.item()
+                        if motor_status_1 != 0:
+                            try:
+                                if motor_status_1 == 1:
+                                    motorWarningPopup('Heart Rate')
+                                    break
+                                elif motor_status_1 == 2:
+                                    motorWarningPopup('Temperature')
+                                    break
+                                elif motor_status_1 == 3:
+                                    motorWarningPopup('Heart Rate', 'Temperature')
+                                    break
+                            except:
+                                pass
+                        else:
+                            pass
     # --------------    ------------------- FF1heartrate -------------------------------- #
 
-                        FF1_HR_UPPER = 0.7
-                        FF1_HR_LOWER = 0.5
-                        FF1_HR_CAUTION = 0.65
+                        FF1_HR_UPPER = 230
+                        FF1_HR_LOWER = 40
+                        FF1_HR_CAUTION = 210
 
                         if  last_row_display_1h.item() <= FF1_HR_LOWER or last_row_display_1h.item() >= FF1_HR_UPPER:
                             setLEDStatus(window, '_FF1HRLED_', '_TABDEFAULTFF1HRLED_', 'red')
@@ -793,9 +943,67 @@ def main():
                             setLEDStatus(window, '_FF1TEMPLED_', '_TABDEFAULTFF1TEMPLED_', 'green')
                             window['_TEMPWARN1_'].Update('No warnings')
 
+
+                        if event == '_PLOTHR1_':            # ! try creating a window for this process like the old cmd window
+                            # showHrGraph(ff1_list)
+
+                            # Parameters
+                            # popups_enabled=False
+                            x_len = 200         # Number of points to display
+                            y_range = [0, 250]  # Range of possible Y values to display
+
+                            # Create figure for plotting
+                            fig = plt.figure()
+                            ax = fig.add_subplot(1, 1, 1)
+                            xs = list(range(0, 200))
+                            ys = [0] * x_len
+                            ax.set_ylim(y_range)
+
+                            # Initialize communication with TMP102
+                            #tmp102.init()
+
+                            # Create a blank line. We will update the line in animate
+                            line, = ax.plot(xs, ys)
+
+                            # Add labels
+                            plt.title('Heart Rate Over Time')
+                            plt.xlabel('Samples')
+                            plt.ylabel('HR (BPM)')
+
+                        # This function is called periodically from FuncAnimation
+                            def animate(i, ys):
+
+                                # Read temperature (Celsius) from TMP102
+                                #temp_c = round(tmp102.read_temp(), 2)
+                                hr = int(ff1_list[-2])
+                                # hr = ff1_hr_list
+                                # Add y to list
+                                ys.append(hr)
+
+                                # Limit y list to set number of items
+                                ys = ys[-x_len:]
+
+                                # Update line with new Y values
+                                line.set_ydata(ys)
+
+                                return line,
+
+                        # below is function call
+                        # Set up plot to call animate() function periodically
+                            ani = animation.FuncAnimation(fig,
+                                animate,
+                                fargs=(ys,),
+                                interval=50,
+                                blit=True)
+                            plt.show(block=False)
+                        else:
+                            pass
+
                     except:
                         # if not dataError:
-                        dataError('FF1')
+                        dataErrorPopup('FF1')
+                        print('\n >>> There seems to be an error with transmitting the data.\n >>> Try resetting the SFSS and try again')
+                        break
                 #ser.flushInput()
                 # time.sleep(.1)
 
@@ -841,7 +1049,7 @@ def main():
                         SetLED(window, '_TABDEFAULTFF2HRLED_', 'green' if last_row_display2.all() < 230 else 'green')
 
     # --------------------------------- FF2movement --------------------------------- #
-    
+
                     df2m = pd.read_csv('data2mov.csv', names=['time', 'movement'], index_col=['time'])
                     #movwarn1 = df1['movement'].max()
                     last_row_display2m = df2m['movement'].iloc[-1]
@@ -856,9 +1064,9 @@ def main():
                         window['_MOVWARN2_'].Update('No warnings')
                         SetLED(window, '_FF2MOVLED_', 'green' if last_row_display2m.all() > 1 else 'green')
                         SetLED(window, '_TABDEFAULTFF2MOVLED_', 'green' if last_row_display2m.all() > 1 else 'green')
-    
+
     # -------------------------------- FF2temperature ------------------------------- #
-    
+
                     df2t = pd.read_csv('data2temp.csv', names=['time', 'temp'], index_col=['time'])
                     #movwarn2 = df2['movement'].max()
                     last_row_display2t = df2t['temp'].iloc[-1]
@@ -920,7 +1128,7 @@ def main():
                         SetLED(window, '_TABDEFAULTFF3HRLED_', 'green' if last_row_display3.all() < 230 else 'green')
 
     # --------------------------------- FF3movement --------------------------------- #
-        
+
                     df3m = pd.read_csv('data3mov.csv', names=['time', 'movement'], index_col=['time'])
                     #movwarn1 = df1['movement'].max()
                     last_row_display3m = df3m['movement'].iloc[-1]
@@ -935,7 +1143,7 @@ def main():
                         window['_MOVWARN3_'].Update('No warnings')
                         SetLED(window, '_FF3MOVLED_', 'green' if last_row_display3m.all() > 1 else 'green')
                         SetLED(window, '_TABDEFAULTFF3MOVLED_', 'green' if last_row_display3m.all() > 1 else 'green')
-        
+
     # -------------------------------- FF3temperature ------------------------------- #
 
                     df3t = pd.read_csv('data3temp.csv', names=['time', 'temp'], index_col=['time'])
@@ -1004,7 +1212,7 @@ def main():
                         print(' >>> Unable to automatically configure your port.')
                         print(" >>> Select {} in the combobox and click 'Configure COM Port'".format(foo))
                         pass
-                    
+
                 if not found:
                     if values['_LISTBOX_'] == '-------':
                         print('\n >>> Your device is unable to be configured automatically')
