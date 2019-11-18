@@ -7,7 +7,7 @@
 # Path: 			c:\..._2019 Fall\Design 2\GUI\SFSS with Serial\SFSS_serial.py
 # Created Date: 	Friday, October 25th 2019, 17:53:41 pm
 # -----
-# Last Modified: 	Wednesday, November 13th 2019, 08:20:17 am
+# Last Modified: 	Monday, November 18th 2019, 12:47:08 pm
 # Modified By: 		Robert Wells
 # -----
 # Copyright (c) 2019 SFSS
@@ -18,6 +18,8 @@
 # HISTORY:
 # Date      			By		Comments
 # ----------			---		----------------------------------------------------------
+# 2019-11-18 12:11:09	RW		added configuration settings for metrics using configparser
+#                               req'd adding [ConfigSectionMap] to map the settings.ini file to the right places
 # 2019-11-12 14:11:82	RW		cleaned up code, resized elements to make window look cleaner
 # 2019-11-11 13:11:80	RW		inserted motor status popup on kris's request [motorWarningPopup]
 #                               waiting to test [motorWarningPopup] since the board is not outputting data in the correct format
@@ -56,6 +58,8 @@ import PySimpleGUI as sg
 import serial
 import serial.tools.list_ports
 from matplotlib.ticker import MaxNLocator
+
+from configparser import SafeConfigParser
 
 # import io
 # import argparse
@@ -490,6 +494,25 @@ def showhr3graph():
     plt.legend()
     plt.show()
 
+# ------------------------------- configuration ------------------------------ #
+
+config = SafeConfigParser()
+config.sections()
+config.read('settings.ini')
+
+def ConfigSectionMap(section):
+    dict1 = {}
+    options = config.options(section)
+    for option in options:
+        try:
+            dict1[option] = config.get(section, option)
+            if dict1[option] == -1:
+                DebugPrint("skip: %s" % option)
+        except:
+            print("exception on %s!" % option)
+            dict1[option] = None
+    return dict1
+
 # ---------------------------------------------------------------------------- #
 #                                 PROGRAM START                                #
 # ---------------------------------------------------------------------------- #
@@ -499,8 +522,6 @@ def main():
     BAUDRATE=115200 # ! trying moving these here to  get rid of called before assignment
     TIMEOUT=2
     ser=serial.Serial()
-
-
 
 # ---------------------------- setup window "feel" --------------------------- #
 
@@ -763,13 +784,48 @@ def main():
 
 # -------------------------------- pre-launch -------------------------------- #
 
+   # ---------------------- load settings from settings.ini --------------------- #
+
+    FF1_HR_UPPER        = int(ConfigSectionMap("Firefighter 1 Thresholds")['ff1_hr_upper'])
+    FF1_HR_LOWER        = int(ConfigSectionMap("Firefighter 1 Thresholds")['ff1_hr_lower'])
+    FF1_HR_CAUTION      = int(ConfigSectionMap("Firefighter 1 Thresholds")['ff1_hr_caution'])
+    FF1_MOV_UPPER       = int(ConfigSectionMap("Firefighter 1 Thresholds")['ff1_mov_upper'])
+    FF1_MOV_LOWER       = int(ConfigSectionMap("Firefighter 1 Thresholds")['ff1_mov_lower'])
+    FF1_TEMP_UPPER      = int(ConfigSectionMap("Firefighter 1 Thresholds")['ff1_temp_upper'])
+    FF1_TEMP_LOWER      = int(ConfigSectionMap("Firefighter 1 Thresholds")['ff1_temp_lower'])
+    FF1_TEMP_CAUTION    = int(ConfigSectionMap("Firefighter 1 Thresholds")['ff1_temp_caution'])
+
+    FF2_HR_UPPER        = int(ConfigSectionMap("Firefighter 2 Thresholds")['ff2_hr_upper'])
+    FF2_HR_LOWER        = int(ConfigSectionMap("Firefighter 2 Thresholds")['ff2_hr_lower'])
+    FF2_HR_CAUTION      = int(ConfigSectionMap("Firefighter 2 Thresholds")['ff2_hr_caution'])
+    FF2_MOV_UPPER       = int(ConfigSectionMap("Firefighter 2 Thresholds")['ff2_mov_upper'])
+    FF2_MOV_LOWER       = int(ConfigSectionMap("Firefighter 2 Thresholds")['ff2_mov_lower'])
+    FF2_TEMP_UPPER      = int(ConfigSectionMap("Firefighter 2 Thresholds")['ff2_temp_upper'])
+    FF2_TEMP_LOWER      = int(ConfigSectionMap("Firefighter 2 Thresholds")['ff2_temp_lower'])
+    FF2_TEMP_CAUTION    = int(ConfigSectionMap("Firefighter 2 Thresholds")['ff2_temp_caution'])
+
+    FF3_HR_UPPER        = int(ConfigSectionMap("Firefighter 3 Thresholds")['ff3_hr_upper'])
+    FF3_HR_LOWER        = int(ConfigSectionMap("Firefighter 3 Thresholds")['ff3_hr_lower'])
+    FF3_HR_CAUTION      = int(ConfigSectionMap("Firefighter 3 Thresholds")['ff3_hr_caution'])
+    FF3_MOV_UPPER       = int(ConfigSectionMap("Firefighter 3 Thresholds")['ff3_mov_upper'])
+    FF3_MOV_LOWER       = int(ConfigSectionMap("Firefighter 3 Thresholds")['ff3_mov_lower'])
+    FF3_TEMP_UPPER      = int(ConfigSectionMap("Firefighter 3 Thresholds")['ff3_temp_upper'])
+    FF3_TEMP_LOWER      = int(ConfigSectionMap("Firefighter 3 Thresholds")['ff3_temp_lower'])
+    FF3_TEMP_CAUTION    = int(ConfigSectionMap("Firefighter 3 Thresholds")['ff3_temp_caution'])
+
+   # -------------------------- initialize empty lists -------------------------- #
+
     ff1_list = []
     #ff2_list = []
     #ff3_list = []
 
+   # ------------------------------ start log files ----------------------------- #
+
     ff1_logfile = createLogFile('FF1')
     #ff2 = createLogFile('FF2') # NOTE: need to add this to ff
     #ff3 = createLogFile('FF3') # NOTE: need to add this to ff
+
+   # --------------------------- print welcome message -------------------------- #
 
     print(" >>> Welcome to the SFSS")
     print(" >>> 1. Plug in the SFSS to a USB port")
@@ -833,7 +889,7 @@ def main():
                 continue
 
             while True:
-                event, values = window.Read(timeout=200)
+                event, values = window.Read(timeout=0)
 
                 if event in(None, 'Exit'):
                     ser.close()
@@ -935,15 +991,15 @@ def main():
                             try:
                                 if motor_status_1 == 1:
                                     # motorWarningPopup('Heart Rate')
-                                    print('There is an error with the heart rate sensor')
+                                    print('The motor is active because of Heart Rate')
                                     pass
                                 elif motor_status_1 == 2:
                                     # motorWarningPopup('Temperature')
-                                    print('There is an error with the temperature sensor')
+                                    print('The motor is active because of Temperature')
                                     pass
                                 elif motor_status_1 == 3:
                                     # motorWarningPopup('Heart Rate', 'Temperature')
-                                    print('There is an error with the heart rate and temperature sensors')
+                                    print('The motor is active because of Heart Rate and Temperature')
                                     pass
                             except:
                                 pass
@@ -952,9 +1008,9 @@ def main():
 
     # --------------------------------- FF1heartrate -------------------------------- #
 
-                        FF1_HR_UPPER = 182
-                        FF1_HR_LOWER = 40
-                        FF1_HR_CAUTION = 130
+                        # FF1_HR_UPPER = 182
+                        # FF1_HR_LOWER = 40
+                        # FF1_HR_CAUTION = 130
 
                         if  ff1_heartrate.item() <= FF1_HR_LOWER or ff1_heartrate.item() >= FF1_HR_UPPER:
                             setLEDStatus(window, '_FF1HRLED_', '_TABDEFAULTFF1HRLED_', 'red')
@@ -978,8 +1034,8 @@ def main():
                         # FF1_MOV_UPPER = 9.8
                         # FF1_MOV_LOWER = 0.1
                         #FF1_MOV_CAUTION = 0.65
-                        FF1_MOV_UPPER = 1
-                        FF1_MOV_LOWER = 0
+                        # FF1_MOV_UPPER = 1
+                        # FF1_MOV_LOWER = 0
                         
                         # if  ff1_movement.item() <= FF1_MOV_LOWER or ff1_movement.item() >= FF1_MOV_UPPER:
                         if  ff1_movement == FF1_MOV_UPPER:
@@ -1006,9 +1062,9 @@ def main():
                         ff1_temperature = df1['temp'].iloc[-1]
                         window['_TEMPTEXT1_'].Update(ff1_temperature)
 
-                        FF1_TEMP_UPPER = 500
-                        #FF1_TEMP_LOWER = 10
-                        FF1_TEMP_CAUTION = 400
+                        # FF1_TEMP_UPPER = 500
+                        # #FF1_TEMP_LOWER = 10
+                        # FF1_TEMP_CAUTION = 400
 
                         if  ff1_temperature.item() > FF1_TEMP_UPPER:
                             setLEDStatus(window, '_FF1TEMPLED_', '_TABDEFAULTFF1TEMPLED_', 'red')
