@@ -7,7 +7,7 @@
 # Path: 			c:\..._2019 Fall\Design 2\GUI\SFSS with Serial\SFSS_serial.py
 # Created Date: 	Friday, October 25th 2019, 17:53:41 pm
 # -----
-# Last Modified: 	Monday, November 18th 2019, 12:47:08 pm
+# Last Modified: 	Monday, November 18th 2019, 17:42:58 pm
 # Modified By: 		Robert Wells
 # -----
 # Copyright (c) 2019 SFSS
@@ -18,6 +18,9 @@
 # HISTORY:
 # Date      			By		Comments
 # ----------			---		----------------------------------------------------------
+# 2019-11-18 17:11:04	RW		combined data checking if statements into defs
+#                               recoded the popup calls to use windows
+#                                   this should eliminate the opening of extraneous popups in the background
 # 2019-11-18 12:11:09	RW		added configuration settings for metrics using configparser
 #                               req'd adding [ConfigSectionMap] to map the settings.ini file to the right places
 # 2019-11-12 14:11:82	RW		cleaned up code, resized elements to make window look cleaner
@@ -513,6 +516,82 @@ def ConfigSectionMap(section):
             dict1[option] = None
     return dict1
 
+def checkHeartRate(ffhrdf, upper_thresh, lower_thresh, caut_thresh, fftab_LEDkey, maintab_LEDkey, ffnum, popups, window):
+
+    if  ffhrdf.item() <= lower_thresh or ffhrdf.item() >= upper_thresh:
+        setLEDStatus(window, fftab_LEDkey, maintab_LEDkey, 'red')
+
+        hr_pop = True
+        close_hr_pop = False
+        # if not popups:
+        #     pass
+        # else:
+        #     statusWarningPopup(ffnum,'Heart Rate', 'firebrick')
+
+    elif caut_thresh < ffhrdf.item() < upper_thresh:
+        setLEDStatus(window, fftab_LEDkey, maintab_LEDkey, 'orange')
+
+        hr_pop = False
+        close_hr_pop = True
+    else:
+        setLEDStatus(window, fftab_LEDkey, maintab_LEDkey, 'green')
+
+        hr_pop = False
+        close_hr_pop = True
+    return hr_pop, close_hr_pop
+
+
+
+def checkMovement(ffmovdf, upper_thresh, lower_thresh, fftab_LEDkey, maintab_LEDkey, warning_key, ffnum, popups, window):
+
+    if  ffmovdf == upper_thresh:
+        setLEDStatus(window, fftab_LEDkey, maintab_LEDkey, 'red')
+        window[warning_key].Update('Low movement')
+
+        mov_pop = True
+        close_mov_pop = False
+        # if not popups:
+        #     pass
+        # else:
+        #     statusWarningPopup(ffnum,'Movement', 'darkorange')
+    else:
+        setLEDStatus(window, fftab_LEDkey, maintab_LEDkey, 'green')
+        window[warning_key].Update('No warnings')
+
+        mov_pop = False
+        close_mov_pop = True
+
+    return mov_pop, close_mov_pop
+
+def checkTemperature(fftempdf, upper_thresh, lower_thresh, caut_thresh, fftab_LEDkey, maintab_LEDkey, warning_key, ffnum, popups, window):
+    
+    if  fftempdf.item() > upper_thresh:
+        setLEDStatus(window, fftab_LEDkey, maintab_LEDkey, 'red')
+        window[warning_key].Update('High Temperature')
+
+        temp_pop = True
+        close_temp_pop = False
+        # if not popups:
+        #     pass
+        # else:
+        #     statusWarningPopup(ffnum,'Temperature', 'orangered')
+
+    elif caut_thresh < fftempdf.all() < upper_thresh:
+        setLEDStatus(window, fftab_LEDkey, maintab_LEDkey, 'orange')
+        window[warning_key].Update('Moderate Temperature')
+
+        temp_pop = False
+        close_temp_pop = True
+
+    else:
+        setLEDStatus(window, fftab_LEDkey, maintab_LEDkey, 'green')
+        window[warning_key].Update('No warnings')
+
+        temp_pop = False
+        close_temp_pop = True
+
+    return temp_pop, close_temp_pop
+
 # ---------------------------------------------------------------------------- #
 #                                 PROGRAM START                                #
 # ---------------------------------------------------------------------------- #
@@ -834,6 +913,18 @@ def main():
 
 # -------------------------------- event loop -------------------------------- #
 
+    hrpopup1_active = False
+    movpopup1_active = False
+    temppopup1_active = False
+
+    hrpopup2_active = False
+    movpopup2_active = False
+    temppopup2_active = False
+
+    hrpopup3_active = False
+    movpopup3_active = False
+    temppopup3_active = False
+
     while True:
         event, values = window.Read()
 
@@ -842,7 +933,7 @@ def main():
             ser.close()
             # keeplog(ff1_log)
             break
-                
+
 # ------------------------------ showing graphs ------------------------------ #
 
         # if event == '_HRGRAPH1_':
@@ -889,7 +980,7 @@ def main():
                 continue
 
             while True:
-                event, values = window.Read(timeout=0)
+                event, values = window.Read(timeout=250)
 
                 if event in(None, 'Exit'):
                     ser.close()
@@ -1008,80 +1099,109 @@ def main():
 
     # --------------------------------- FF1heartrate -------------------------------- #
 
-                        # FF1_HR_UPPER = 182
-                        # FF1_HR_LOWER = 40
-                        # FF1_HR_CAUTION = 130
+                        hr_popup1, close_hr_popup1 = checkHeartRate(ff1_heartrate, FF1_HR_UPPER, FF1_HR_LOWER, FF1_HR_CAUTION, 
+                                                                            '_FF1HRLED_', '_TABDEFAULTFF1HRLED_', 'FF1', popups_enabled, window)
 
-                        if  ff1_heartrate.item() <= FF1_HR_LOWER or ff1_heartrate.item() >= FF1_HR_UPPER:
-                            setLEDStatus(window, '_FF1HRLED_', '_TABDEFAULTFF1HRLED_', 'red')
 
-                            if not popups_enabled:
-                                pass
+                        if popups_enabled:
+                            if hr_popup1 and not hrpopup1_active:
+                                hrpopup1_active = True
+                                layout_hr1 = [
+                                            [sg.Text('HR Warning for FF1')],
+                                            [sg.Button('OK')]
+                                            ]
+                                hrpopup1 = sg.Window('Warning', size=(275, 100), location=(1000,145), font=('white'), 
+                                                    background_color='firebrick', use_default_focus=False).Layout(layout_hr1)
+        
+                            if hrpopup1_active and close_hr_popup1:
+                                hrpopup1_active = False
+                                hrpopup1.close()
                             else:
-                                statusWarningPopup('FF1','Heart Rate', 'firebrick')
+                                pass
 
-                        elif FF1_HR_CAUTION < ff1_heartrate.item() < FF1_HR_UPPER:
-                            setLEDStatus(window, '_FF1HRLED_', '_TABDEFAULTFF1HRLED_', 'orange')
-
+                            if hrpopup1_active:
+                                event, values = hrpopup1.read(timeout=0)
+                                if event == 'Exit' or event is None:
+                                    hrpopup1_active = False
+                                    hrpopup1.close()
+                                    pass
                         else:
-                            setLEDStatus(window, '_FF1HRLED_', '_TABDEFAULTFF1HRLED_', 'green')
-
+                            if hrpopup1_active:
+                                hrpopup1_active = False
+                                hrpopup1.close()
+                            pass
     # --------------------------------- FF1movement --------------------------------- #
 
                         ff1_movement = df1['movement'].iloc[0]
                         window['_MOVTEXT1_'].Update(df1['movement'].iloc[0])
 
-                        # FF1_MOV_UPPER = 9.8
-                        # FF1_MOV_LOWER = 0.1
-                        #FF1_MOV_CAUTION = 0.65
-                        # FF1_MOV_UPPER = 1
-                        # FF1_MOV_LOWER = 0
-                        
-                        # if  ff1_movement.item() <= FF1_MOV_LOWER or ff1_movement.item() >= FF1_MOV_UPPER:
-                        if  ff1_movement == FF1_MOV_UPPER:
-                            setLEDStatus(window, '_FF1MOVLED_', '_TABDEFAULTFF1MOVLED_', 'red')
-                            window['_MOVWARN1_'].Update('Low movement')
+                        mov_popup1, close_mov_popup1 = checkMovement(ff1_movement, FF1_MOV_UPPER, FF1_MOV_LOWER, 
+                                                                            '_FF1MOVLED_', '_TABDEFAULTFF1MOVLED_', '_MOVWARN1_', 'FF1', popups_enabled, window)
 
-                            if not popups_enabled:
-                                pass
+                        if popups_enabled:
+                            if mov_popup1 and not movpopup1_active:
+                                movpopup1_active = True
+                                layout_mov1 = [
+                                            [sg.Text('Movement Warning for FF1')],
+                                            [sg.Button('OK')]
+                                            ]
+                                movpopup1 = sg.Window('Warning', size=(275, 100), location=(1000,265), font=('white'), 
+                                                    background_color='darkorange', use_default_focus=False).Layout(layout_mov1)
+        
+                            if movpopup1_active and close_mov_popup1:
+                                movpopup1_active = False
+                                movpopup1.close()
                             else:
-                                statusWarningPopup('FF1','Movement', 'darkorange')
+                                pass
 
-                                # time.sleep(.1)
-
-                        # commented out in case we need to establish movement thresholds
-                        # elif FF1_HR_CAUTION < last_row_display_m1.item() < FF1_HR_UPPER:
-                        #     setLEDStatus(window, '_FF1MOVLED_', '_TABDEFAULTFF1MOVLED_', 'orange')
-
+                            if movpopup1_active:
+                                event, values = movpopup1.read(timeout=0)
+                                if event == 'Exit' or event is None:
+                                    movpopup1_active = False
+                                    movpopup1.close()
+                                    pass
                         else:
-                            setLEDStatus(window, '_FF1MOVLED_', '_TABDEFAULTFF1MOVLED_', 'green')
-                            window['_MOVWARN1_'].Update('No warnings')
+                            if movpopup1_active:
+                                movpopup1_active = False
+                                movpopup1.close()
+                            pass
 
     # -------------------------------- FF1temperature ------------------------------- #
 
                         ff1_temperature = df1['temp'].iloc[-1]
                         window['_TEMPTEXT1_'].Update(ff1_temperature)
 
-                        # FF1_TEMP_UPPER = 500
-                        # #FF1_TEMP_LOWER = 10
-                        # FF1_TEMP_CAUTION = 400
+                        temp_popup1, close_temp_popup1 = checkTemperature(ff1_temperature, FF1_TEMP_UPPER, FF1_TEMP_LOWER, FF1_TEMP_CAUTION, 
+                                                                            '_FF1TEMPLED_', '_TABDEFAULTFF1TEMPLED_', '_TEMPWARN1_', 'FF1', popups_enabled, window)
 
-                        if  ff1_temperature.item() > FF1_TEMP_UPPER:
-                            setLEDStatus(window, '_FF1TEMPLED_', '_TABDEFAULTFF1TEMPLED_', 'red')
-                            window['_TEMPWARN1_'].Update('High Temperature')
-
-                            if not popups_enabled:
-                                pass
+                        if popups_enabled:
+                            if temp_popup1 and not temppopup1_active:
+                                temppopup1_active = True
+                                layout_temp1 = [
+                                            [sg.Text('Temperature Warning for FF1')],
+                                            [sg.Button('OK')]
+                                            ]
+                                temppopup1 = sg.Window('Warning', size=(275, 100), location=(1000,385), font=('white'), 
+                                                    background_color='orangered', use_default_focus=False).Layout(layout_temp1)
+        
+                            if temppopup1_active and close_temp_popup1:
+                                temppopup1_active = False
+                                temppopup1.close()
                             else:
-                                statusWarningPopup('FF1','Temperature', 'orangered')
+                                pass
 
-                        elif FF1_TEMP_CAUTION < ff1_temperature.all() < FF1_TEMP_UPPER:
-                            setLEDStatus(window, '_FF1TEMPLED_', '_TABDEFAULTFF1TEMPLED_', 'orange')
-                            window['_TEMPWARN1_'].Update('Moderate Temperature')
+                            if temppopup1_active:
+                                event, values = temppopup1.read(timeout=0)
+                                if event == 'Exit' or event is None:
+                                    temppopup1_active = False
+                                    temppopup1.close()
+                                    pass
 
                         else:
-                            setLEDStatus(window, '_FF1TEMPLED_', '_TABDEFAULTFF1TEMPLED_', 'green')
-                            window['_TEMPWARN1_'].Update('No warnings')
+                            if temppopup1_active:
+                                temppopup1_active = False
+                                temppopup1.close()
+                            pass
 
     # -------------------------- plotting ff1 heart rate ------------------------- #
 
