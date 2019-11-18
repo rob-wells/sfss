@@ -7,7 +7,7 @@
 # Path: 			c:\..._2019 Fall\Design 2\GUI\SFSS with Serial\SFSS_serial.py
 # Created Date: 	Friday, October 25th 2019, 17:53:41 pm
 # -----
-# Last Modified: 	Monday, November 11th 2019, 13:23:41 pm
+# Last Modified: 	Wednesday, November 13th 2019, 08:20:17 am
 # Modified By: 		Robert Wells
 # -----
 # Copyright (c) 2019 SFSS
@@ -18,6 +18,7 @@
 # HISTORY:
 # Date      			By		Comments
 # ----------			---		----------------------------------------------------------
+# 2019-11-12 14:11:82	RW		cleaned up code, resized elements to make window look cleaner
 # 2019-11-11 13:11:80	RW		inserted motor status popup on kris's request [motorWarningPopup]
 #                               waiting to test [motorWarningPopup] since the board is not outputting data in the correct format
 #                               added break after dataErrorPopup to stop the while loop if there's a data error
@@ -103,8 +104,8 @@ def statusWarningPopup(ffnum, status, color):
     """
     # sg.PopupAutoClose('{} Warning for {}'.format(status,ffnum), auto_close_duration=2, non_blocking=True,
     # background_color= color, grab_anywhere=True, keep_on_top=False, location=(-1,-1))
-    sg.popup_no_wait('{} Warning for {}'.format(status,ffnum), auto_close=True, auto_close_duration=1, non_blocking=True,
-    background_color= color, grab_anywhere=True, keep_on_top=False, location=(-1,-1))
+    sg.popup_no_wait('{} Warning for {}'.format(status,ffnum), auto_close=True, auto_close_duration=15, non_blocking=True,
+    background_color= color, grab_anywhere=True, keep_on_top=False, location=(1,60))
 
 
 def dataErrorPopup(ffnum):
@@ -113,7 +114,7 @@ def dataErrorPopup(ffnum):
 def motorWarningPopup(m_warn1, m_warn2=None):
     sg.PopupAutoClose('Motor Warning', "Warning: These sensors [{}, {}] are not generating valid data".format(m_warn1,m_warn2))
 
-def porterror():
+def portError():
     sg.PopupAutoClose('Something went wrong', 'Make sure you have the correct port selected in the list box', non_blocking=True, auto_close_duration=2)
 
 # NOTE: leaving this here just in case
@@ -200,6 +201,7 @@ def serialToList(ser):
     return(decoded_parsed_rawdata)
 
 def listToDataFrame(datalist):
+
     header = ['microcntr', 'temp', 'movement', 'fall', 'heartrate', 'motor']
     # bool_columns = ['motor']
     float_columns = ['temp', 'movement', 'fall', 'heartrate']
@@ -209,8 +211,8 @@ def listToDataFrame(datalist):
     #dataframe.index = pd.Series([dt.datetime.now()] * len(dataframe)) ##adds timestamp to dataframe and sets as index
     return(dataframe)
 
-# ! setting date time for index############################################################
 def logAllData(dataframe, ffnumber):
+
     dataframe.to_csv(ffnumber, sep=',', float_format='%04f', mode='a', header=None, index=False)
 
 def createLogFile(filename):
@@ -220,18 +222,14 @@ def createLogFile(filename):
         filename (string): name for the file
     """
     # setting header for the log csv
-    # logheader = ['i', 'microcntr', 'temp', 'movement', 'fall', 'heartrate', 'motor']
     logheader = ['microcntr', 'temp', 'movement', 'fall', 'heartrate', 'motor']
-    logfile_name=filename+"_"+str(dt.datetime.now().strftime("%Y-%m-%d %H%M%S"))+'_temp.log'                                     # ! added dt.datetime.now() moved function call to before while loop after main
+    logfile_name=filename+"_"+str(dt.datetime.now().strftime("%Y-%m-%d %H%M%S"))+'.log'
     with open(logfile_name,'w', newline='') as csv_file:
         csv_writer = csv.writer(csv_file)
         csv_writer.writerow(logheader)
         return logfile_name
         #print('done with header')
 
-# def keeplog(log):
-#     df.to_csv(datetime.now()+log,sep=',', float_format='%04f', mode='a', header=None, index=False)
-#     with open(log)
 # ----------------------------- HEART RATE TABLE ----------------------------- #
 
 def hrtable1():
@@ -526,131 +524,181 @@ def main():
 
 # --------------------- define columns to be used in tabs -------------------- #
 
+ # --------------------------------- main tab --------------------------------- #
+
     comlist = ['-------', 'COM1', 'COM2', 'COM3', 'COM4', 'COM5', 'COM6', 'COM7', 'COM8',
                 'COM9', 'COM10', 'COM11', 'COM12', 'COM13', 'COM14', 'COM15']
 
     cold1_frame_layout = [
-        [sg.Output(size=(65, 30), key='_SETUPOUTPUT_',font='Courier 8')],
-         #sg.DropDown(comlist, default_value='COM7',enable_events=True, key='_LISTBOX_')],
-        [sg.Button('Check COM Ports', pad=(5,2), bind_return_key=False),
-         sg.Button('Configure COM Port', pad=(5,2), bind_return_key=False, button_color=('white', 'green')),
+        [sg.Output(size=(52, 25), key='_SETUPOUTPUT_',pad=((0,0),(10,5)), font='Courier 8')],
+        [sg.Button('Check COM Ports', pad=(5,10), bind_return_key=False),
+         sg.Button('Configure COM Port', pad=(5,10), bind_return_key=False, button_color=('white', 'green')),
          sg.DropDown(comlist, size=(10,1), enable_events=True, readonly=True, key='_LISTBOX_')]
     ]
 
-    cold1 = [[sg.Frame('Setup', layout = cold1_frame_layout, relief=sg.RELIEF_RAISED, element_justification='justified')]]
+    cold1 = [[sg.Frame('Setup', layout = cold1_frame_layout, relief=sg.RELIEF_RAISED, pad=(0,2), element_justification='center')]]
 
     cold2_frame_layout = [
-        [sg.Text('Firefighter #', justification='center'), sg.Text('Heart Rate', justification='center'),
-        sg.Text('Movement', justification='center'), sg.Text('Temperature', justification='center')],
-        [sg.Text('Firefighter 1: ', justification='left'), LEDIndicator('_TABDEFAULTFF1HRLED_'),
-        sg.Text(' '), LEDIndicator('_TABDEFAULTFF1MOVLED_'), sg.Text(' '), LEDIndicator('_TABDEFAULTFF1TEMPLED_')],
-        [sg.Text('Firefighter 2: ', justification='left'), LEDIndicator('_TABDEFAULTFF2HRLED_'),
-        sg.Text(' '), LEDIndicator('_TABDEFAULTFF2MOVLED_'), sg.Text(' '), LEDIndicator('_TABDEFAULTFF2TEMPLED_')],
-        [sg.Text('Firefighter 3: ', justification='left'), LEDIndicator('_TABDEFAULTFF3HRLED_'),
-        sg.Text(' '), LEDIndicator('_TABDEFAULTFF3MOVLED_'), sg.Text(' '), LEDIndicator('_TABDEFAULTFF3TEMPLED_')],
-        [sg.Button('Update All', pad=(5,2), key='_UPDATEALL_'), sg.Button('Stop Updates', pad=(5,2), key='_TABDEFAULTSTOPUP_'),
+        [sg.Text('Firefighter #',   pad=((0, 20),(30,10)), justification='center'), 
+        sg.Text('Heart Rate',       pad=((0, 20),(30,10)), justification='center'),
+        sg.Text('Movement',         pad=((0, 20),(30,10)), justification='center'), 
+        sg.Text('Temperature',      pad=((0, 20),(30,10)), justification='center')],
+
+        [sg.Text('Firefighter 1: ', pad=((2, 2),(20,20)), justification='left'),
+        sg.Text(' ', pad=(( 0, 10),(20,40))),   LEDIndicator('_TABDEFAULTFF1HRLED_'),
+        sg.Text(' ', pad=((35, 20),(20,40))),   LEDIndicator('_TABDEFAULTFF1MOVLED_'),
+        sg.Text(' ', pad=((35, 20),(20,40))),   LEDIndicator('_TABDEFAULTFF1TEMPLED_')],
+
+        [sg.Text('Firefighter 2: ', pad=((2, 2),(20,20)), justification='left'), 
+        sg.Text(' ', pad=(( 0, 10),(20,40))),   LEDIndicator('_TABDEFAULTFF2HRLED_'),
+        sg.Text(' ', pad=((35, 20),(20,40))),   LEDIndicator('_TABDEFAULTFF2MOVLED_'),
+        sg.Text(' ', pad=((35, 20),(20,40))),   LEDIndicator('_TABDEFAULTFF2TEMPLED_')],
+
+        [sg.Text('Firefighter 3: ', pad=((2, 2),(20,20)), justification='left'), 
+        sg.Text(' ', pad=(( 0, 10),(20,40))),   LEDIndicator('_TABDEFAULTFF3HRLED_'),
+        sg.Text(' ', pad=((35, 20),(20,40))),   LEDIndicator('_TABDEFAULTFF3MOVLED_'),
+        sg.Text(' ', pad=((35, 20),(20,40))),   LEDIndicator('_TABDEFAULTFF3TEMPLED_')],
+        
+        [sg.Button('Update All', pad=(5,15), key='_UPDATEALL_'), sg.Button('Stop Updates', pad=(5,15), key='_TABDEFAULTSTOPUP_'),
          sg.Checkbox('Enable PopUps', default = True, enable_events = True, key='_TOGGLEPOPUPALL_')]
-        ]
+         ]
 
     cold2 = [[sg.Frame('Firefighter Status', cold2_frame_layout, relief=sg.RELIEF_RAISED, element_justification='justified')]]
 
+ # ----------------------------------- tab 1 ---------------------------------- #
+
     cola1_frame_layout = [
-        [sg.Text("Heart Rate", font=('calibri', 12), justification='right'),
-        LEDIndicator('_FF1HRLED_'), sg.Multiline(size=(10,1),font=('calibri', 15, 'bold'), disabled=True, key='_HRTEXT1_'),
-        sg.Text('Max Recorded HR:', justification='right'), sg.Multiline(size=(10,1), font=('calibri', 15, 'bold'), disabled=True,  key='_MAXHRTEXT1_'),
-        sg.Button('Plot HR', key='_PLOTHR1_')]
-        ]
+        [sg.Text("Status", font=('calibri', 12), pad=((2, 20),(2,2)), justification='right'),
+        LEDIndicator('_FF1HRLED_'), sg.Text(' ', pad=((0, 10),(10,10))),
+        sg.Multiline(size=(15,1),font=('calibri', 15, 'bold'), disabled=True, key='_HRTEXT1_', pad=((0, 10),(20,20))),
+        sg.Text('Max Recorded HR:', pad=((10, 49),(2,2)), justification='right'), 
+        sg.Multiline(size=(15,1), font=('calibri', 15, 'bold'), disabled=True,  key='_MAXHRTEXT1_', pad=((0, 10),(20,20))),
+        # sg.Button('Plot HR', key='_PLOTHR1_')]
+        ]]
 
     cola1 = [[sg.Frame('Heart Rate', cola1_frame_layout, element_justification='center')]]
 
     cola2_frame_layout = [
-        [sg.Text('Movement', font=('calibri', 12), justification='right'),
-        LEDIndicator('_FF1MOVLED_'), sg.Multiline(size=(10,1), font=('calibri', 15, 'bold'), disabled=True,  key='_MOVTEXT1_'),
-        sg.Text('Movement Warnings:', justification='right'), sg.Multiline(size=(10,1), font=('calibri', 15, 'bold'), disabled=True,  key='_MOVWARN1_'),
-        sg.Button('FF1 RAW Movement', key='_RAWMOV1_')]
+        [sg.Text('Status', font=('calibri', 12), pad=((2, 20),(2,2)), justification='right'),
+        LEDIndicator('_FF1MOVLED_'), sg.Text(' ', pad=((0, 10),(10,10))),
+        sg.Multiline(size=(15,1), font=('calibri', 15, 'bold'), disabled=True,  key='_MOVTEXT1_', pad=((0, 10),(20,20))),
+        sg.Text('Movement Warnings:', pad=((10, 34),(2,2)), justification='right'), 
+        sg.Multiline(size=(15,1), font=('calibri', 15, 'bold'), disabled=True,  key='_MOVWARN1_', pad=((0, 10),(20,20))),
+        ]
     ]
 
     cola2 = [[sg.Frame('Movement', cola2_frame_layout)]]
 
     cola3_frame_layout = [
-        [sg.Text('Temperature', font=('calibri', 12), justification='right'),
-        LEDIndicator('_FF1TEMPLED_'), sg.Multiline(size=(10,1), font=('calibri', 15, 'bold'), disabled=True,  key='_TEMPTEXT1_'),
-        sg.Text('Temperature Warnings:', justification='right'), sg.Multiline(size=(10,1), font=('calibri', 15, 'bold'), disabled=True,  key='_TEMPWARN1_'),
-        sg.Button('FF1 RAW Temperature', key='_RAWTEMP1_')]
+        [sg.Text('Status', font=('calibri', 12), pad=((2, 20),(2,2)), justification='right'),
+        LEDIndicator('_FF1TEMPLED_'), sg.Text(' ', pad=((0, 10),(10,10))),
+        sg.Multiline(size=(15,1), font=('calibri', 15, 'bold'), disabled=True,  key='_TEMPTEXT1_', pad=((0, 10),(20,20))),
+        sg.Text('Temperature Warnings:', pad=((10, 20),(2,2)), justification='right'), 
+        sg.Multiline(size=(15,1), font=('calibri', 15, 'bold'), disabled=True,  key='_TEMPWARN1_', pad=((0, 10),(20,20))),
+        ]
     ]
 
     cola3 = [[sg.Frame('Temperature', cola3_frame_layout)]]
 
+    cola4 = [[sg.Button('Update',       pad=(10,4), key='_UPDATETAB1_'), 
+              sg.Button('Stop Updates', pad=(10,4), key='_STOPUPTAB1_'), 
+              sg.Button('Show Graph',   pad=(10,4), key='_PLOTHR1_')]]
+
+ # ----------------------------------- tab 2 ---------------------------------- #
 
     colb1_frame_layout = [
-        [sg.Text("Heart Rate", font=('calibri', 12, 'bold'), justification='right'),
-        LEDIndicator('_FF2HRLED_'), sg.Multiline(size=(10,1), font=('calibri', 15, 'bold'), disabled=True,  key='_HRTEXT2_'),
-        sg.Text('Max Recorded HR:', justification='right'), sg.Multiline(size=(10,1), font=('calibri', 15, 'bold'), disabled=True,  key='_MAXHRTEXT2_'),
-        sg.ReadButton('Plot HR', key='_PLOTHR2_')]
+        [sg.Text("Status", font=('calibri', 12), pad=((2, 20),(2,2)), justification='right'),
+        LEDIndicator('_FF2HRLED_'), sg.Text(' ', pad=((0, 10),(10,10))),
+        sg.Multiline(size=(15,1), font=('calibri', 15, 'bold'), disabled=True,  key='_HRTEXT2_', pad=((0, 10),(20,20))),
+        sg.Text('Max Recorded HR:', pad=((10, 49),(2,2)), justification='right'), 
+        sg.Multiline(size=(15,1), font=('calibri', 15, 'bold'), disabled=True,  key='_MAXHRTEXT2_', pad=((0, 10),(20,20))),
+        # sg.ReadButton('Plot HR', key='_PLOTHR2_')]
+        ]
     ]
 
-    colb1 = [[sg.Frame('Heart Rate', colb1_frame_layout)]]
+    colb1 = [[sg.Frame('Heart Rate', colb1_frame_layout, element_justification='center')]]
 
     colb2_frame_layout = [
-        [sg.Text('Movement', font=('calibri', 12), justification='right'),
-        LEDIndicator('_FF2MOVLED_'), sg.Multiline(size=(10,1), font=('calibri', 15, 'bold'), disabled=True,  key='_MOVTEXT2_'),
-        sg.Text('Movement Warnings:', justification='right'), sg.Multiline(size=(10,1), font=('calibri', 15, 'bold'), disabled=True,  key='_MOVWARN2_'),
-        sg.Button('FF2 RAW Movement', key='_RAWMOV2_')]
+        [sg.Text('Status', font=('calibri', 12), pad=((2, 20),(2,2)), justification='right'),
+        LEDIndicator('_FF2MOVLED_'), sg.Text(' ', pad=((0, 10),(10,10))), 
+        sg.Multiline(size=(15,1), font=('calibri', 15, 'bold'), disabled=True,  key='_MOVTEXT2_', pad=((0, 10),(20,20))),
+        sg.Text('Movement Warnings:', pad=((10, 34),(2,2)), justification='right'), 
+        sg.Multiline(size=(15,1), font=('calibri', 15, 'bold'), disabled=True,  key='_MOVWARN2_', pad=((0, 10),(20,20))),
+        ]
     ]
 
     colb2 = [[sg.Frame('Movement', colb2_frame_layout)]]
 
     colb3_frame_layout = [
-        [sg.Text('Temperature', font=('calibri', 12), justification='right'),
-        LEDIndicator('_FF2TEMPLED_'), sg.Multiline(size=(10,1), font=('calibri', 15, 'bold'), disabled=True,  key='_TEMPTEXT2_'),
-        sg.Text('Temperature Warnings:', justification='right'), sg.Multiline(size=(10,1), font=('calibri', 15, 'bold'), disabled=True,  key='_TEMPWARN2_'),
-        sg.Button('FF2 RAW Temp', key='_RAWTEMP2_')]
+        [sg.Text('Status', font=('calibri', 12), pad=((2, 20),(2,2)), justification='right'),
+        LEDIndicator('_FF2TEMPLED_'), sg.Text(' ', pad=((0, 10),(10,10))), 
+        sg.Multiline(size=(15,1), font=('calibri', 15, 'bold'), disabled=True,  key='_TEMPTEXT2_', pad=((0, 10),(20,20))),
+        sg.Text('Temperature Warnings:', pad=((10, 20),(2,2)), justification='right'), 
+        sg.Multiline(size=(15,1), font=('calibri', 15, 'bold'), disabled=True,  key='_TEMPWARN2_', pad=((0, 10),(20,20))),
+        ]
     ]
 
-    colb3 = [[sg.Frame('Temperature', colb3_frame_layout)]]
+    colb3 = [[sg.Frame('Temperature', colb3_frame_layout, element_justification='center')]]
+
+    colb4 = [[sg.Button('Update',       pad=(10,4), key='_UPDATETAB2_'), 
+              sg.Button('Stop Updates', pad=(10,4), key='_STOPUPTAB2_'), 
+              sg.Button('Show Graph',   pad=(10,4), key='_PLOTHR2_')]]
+
+ # ----------------------------------- tab 3 ---------------------------------- #
 
     colc1_frame_layout = [
-        [sg.Text("Heart Rate", font=('calibri', 12), justification='right'),
-        LEDIndicator('_FF3HRLED_'), sg.Multiline(size=(10,1), font=('calibri', 15, 'bold'), disabled=True,  key='_HRTEXT3_'),
-        sg.Text('Max Recorded HR:', justification='right'), sg.Multiline(size=(10,1), font=('calibri', 15, 'bold'), disabled=True,  key='_MAXHRTEXT3_'),
-        sg.ReadButton('Plot HR', key='_PLOTHR3_')]
+        [sg.Text("Status", font=('calibri', 12), pad=((2, 20),(2,2)), justification='right'),
+        LEDIndicator('_FF3HRLED_'), sg.Text(' ', pad=((0, 10),(10,10))), 
+        sg.Multiline(size=(15,1), font=('calibri', 15, 'bold'), disabled=True,  key='_HRTEXT3_', pad=((0, 10),(20,20))),
+        sg.Text('Max Recorded HR:', pad=((10, 49),(2,2)), justification='right'), 
+        sg.Multiline(size=(10,1), font=('calibri', 15, 'bold'), disabled=True,  key='_MAXHRTEXT3_', pad=((0, 10),(20,20))),
+        # sg.ReadButton('Plot HR', key='_PLOTHR3_')]
+        ]
     ]
 
     colc1 = [[sg.Frame('Heart Rate', colc1_frame_layout)]]
 
     colc2_frame_layout = [
-        [sg.Text('Movement', font=('calibri', 12), justification='right'),
-        LEDIndicator('_FF3MOVLED_'), sg.Multiline(size=(10,1), font=('calibri', 15, 'bold'), disabled=True,  key='_MOVTEXT3_'),
-        sg.Text('Movement Warnings:', justification='right'), sg.Multiline(size=(10,1), font=('calibri', 15, 'bold'), disabled=True,  key='_MOVWARN3_'),
-        sg.Button('FF3 RAW Movement', key='_RAWMOV3_')]
+        [sg.Text('Status', font=('calibri', 12), pad=((2, 20),(2,2)), justification='right'),
+        LEDIndicator('_FF3MOVLED_'), sg.Text(' ', pad=((0, 10),(10,10))), 
+        sg.Multiline(size=(15,1), font=('calibri', 15, 'bold'), disabled=True,  key='_MOVTEXT3_', pad=((0, 10),(20,20))),
+        sg.Text('Movement Warnings:', pad=((10, 34),(2,2)), justification='right'), 
+        sg.Multiline(size=(15,1), font=('calibri', 15, 'bold'), disabled=True,  key='_MOVWARN3_', pad=((0, 10),(20,20))),
+        ]
     ]
 
     colc2 = [[sg.Frame('Movement', colc2_frame_layout)]]
 
     colc3_frame_layout = [
-        [sg.Text('Temperature', font=('calibri', 12), justification='right'),
-        LEDIndicator('_FF3TEMPLED_'), sg.Multiline(size=(10,1), font=('calibri', 15, 'bold'), disabled=True,  key='_TEMPTEXT3_'),
-        sg.Text('Temperature Warnings:', justification='right'), sg.Multiline(size=(10,1), font=('calibri', 15, 'bold'), disabled=True,  key='_TEMPWARN3_'),
-        sg.Button('FF3 RAW Temp', key='_RAWTEMP3_')]
+        [sg.Text('Status', font=('calibri', 12), pad=((2, 20),(2,2)), justification='right'),
+        LEDIndicator('_FF3TEMPLED_'), sg.Text(' ', pad=((0, 10),(10,10))), 
+        sg.Multiline(size=(15,1), font=('calibri', 15, 'bold'), disabled=True,  key='_TEMPTEXT3_', pad=((0, 10),(20,20))),
+        sg.Text('Temperature Warnings:', pad=((10, 20),(2,2)), justification='right'), 
+        sg.Multiline(size=(15,1), font=('calibri', 15, 'bold'), disabled=True,  key='_TEMPWARN3_', pad=((0, 10),(20,20))),
+        ]
     ]
 
     colc3 = [[sg.Frame('Temperature', colc3_frame_layout)]]
+
+    colc4 = [[sg.Button('Update',       pad=(10,4), key='_UPDATETAB3_'), 
+              sg.Button('Stop Updates', pad=(10,4), key='_STOPUPTAB3_'), 
+              sg.Button('Show Graph',   pad=(10,4), key='_PLOTHR3_')]]
 
 # ---------------------------- define tab layouts ---------------------------- #
 
     tabdefault_layout = [
                     [sg.Text('Welcome to the SFSS!', size=(45, 1), justification='center', font=('calibri', 25, 'bold'))],
-                    [sg.Text('Use the tabs above to navigate...', size=(45, 1), justification='center', font=('calibri', 15))],
                     [sg.Column(cold1), sg.Column(cold2)]
     ]
 
     tab1_layout =  [
                     [sg.Text('Firefighter 1', font=('calibri', 15, 'bold'))],
-                    [sg.Column(cola1,justification='center', element_justification='center')],
-                    [sg.Column(cola2,justification='center', element_justification='center')],
-                    [sg.Column(cola3,justification='center', element_justification='center')],
-                    [sg.Button('Update', key='_UPDATETAB1_'), sg.Button('Stop Updates', key='_STOPUPTAB1_'),
-                    sg.Button('Show Graph', key='_HRGRAPH1_')]
+                    [sg.Column(cola1, justification='center', element_justification='center')],
+                    [sg.Column(cola2, justification='center', element_justification='center')],
+                    [sg.Column(cola3, justification='center', element_justification='center')],
+                    [sg.Column(cola4, justification='center', element_justification='center')],
+                    # [sg.Button('Update', key='_UPDATETAB1_'), sg.Button('Stop Updates', key='_STOPUPTAB1_'),
+                    # sg.Button('Show Graph', key='_PLOTHR1_')]
     ]
 
     tab2_layout =  [
@@ -658,17 +706,15 @@ def main():
                     [sg.Column(colb1, justification='center', element_justification='center')],
                     [sg.Column(colb2, justification='center', element_justification='center')],
                     [sg.Column(colb3, justification='center', element_justification='center')],
-                    [sg.Button('Update', key='_UPDATETAB2_'), sg.Button('Stop Updates', key='_STOPUPTAB2_'),
-                    sg.Button('Show Graph', key='_HRGRAPH2_')]
+                    [sg.Column(colb4, justification='center', element_justification='center')],
     ]
 
     tab3_layout =  [
                     [sg.Text('Firefighter 3', font=('calibri', 15, 'bold'))],
-                    [sg.Column(colc1,justification='center', element_justification='center')],
-                    [sg.Column(colc2,justification='center', element_justification='center')],
-                    [sg.Column(colc3,justification='center', element_justification='center')],
-                    [sg.Button('Update', key='_UPDATETAB3_'), sg.Button('Stop Updates', key='_STOPUPTAB12'),
-                    sg.Button('Show Graph', key='_HRGRAPH3_')]
+                    [sg.Column(colc1, justification='center', element_justification='center')],
+                    [sg.Column(colc2, justification='center', element_justification='center')],
+                    [sg.Column(colc3, justification='center', element_justification='center')],
+                    [sg.Column(colc4, justification='center', element_justification='center')],
     ]
 
 # ------------------------------- window layout ------------------------------ #
@@ -684,12 +730,39 @@ def main():
             key='_TABGROUP_', title_color='Black')]
     ]
 
-    window = sg.Window("Smart Firefighter Support System", default_element_size=(20, 5), auto_size_text=False,
-                            auto_size_buttons=True, element_padding=(2,2), grab_anywhere=False,
-                            default_button_element_size=(5, 1), resizable=True, element_justification='center',
+    # window = sg.Window("Smart Firefighter Support System", default_element_size=(20, 5), auto_size_text=False,
+    #                         auto_size_buttons=True, element_padding=(2,2), grab_anywhere=False,
+    #                         default_button_element_size=(5, 1), resizable=True, element_justification='center',
+    #                         finalize=True).Layout(layout)
+
+    window = sg.Window("Smart Firefighter Support System", element_justification='left', location=(1,145),
                             finalize=True).Layout(layout)
 
-# -------------------------------- EVENT LOOP -------------------------------- #
+# ------------------------------ initialize LEDs ----------------------------- #
+
+    window.Finalize()
+    SetLED(window, '_TABDEFAULTFF1HRLED_', 'grey')
+    SetLED(window, '_TABDEFAULTFF1MOVLED_', 'grey')
+    SetLED(window, '_TABDEFAULTFF1TEMPLED_', 'grey')
+    SetLED(window, '_TABDEFAULTFF2HRLED_', 'grey')
+    SetLED(window, '_TABDEFAULTFF2MOVLED_', 'grey')
+    SetLED(window, '_TABDEFAULTFF2TEMPLED_', 'grey')
+    SetLED(window, '_TABDEFAULTFF3HRLED_', 'grey')
+    SetLED(window, '_TABDEFAULTFF3MOVLED_', 'grey')
+    SetLED(window, '_TABDEFAULTFF3TEMPLED_', 'grey')
+
+    SetLED(window, '_FF1HRLED_', 'grey')
+    SetLED(window, '_FF1MOVLED_', 'grey')
+    SetLED(window, '_FF1TEMPLED_', 'grey')
+    SetLED(window, '_FF2HRLED_', 'grey')
+    SetLED(window, '_FF2MOVLED_', 'grey')
+    SetLED(window, '_FF2TEMPLED_', 'grey')
+    SetLED(window, '_FF3HRLED_', 'grey')
+    SetLED(window, '_FF3MOVLED_', 'grey')
+    SetLED(window, '_FF3TEMPLED_', 'grey')
+
+# -------------------------------- pre-launch -------------------------------- #
+
     ff1_list = []
     #ff2_list = []
     #ff3_list = []
@@ -698,19 +771,22 @@ def main():
     #ff2 = createLogFile('FF2') # NOTE: need to add this to ff
     #ff3 = createLogFile('FF3') # NOTE: need to add this to ff
 
+    print(" >>> Welcome to the SFSS")
+    print(" >>> 1. Plug in the SFSS to a USB port")
+    print(" >>> 2. Click the Check COM Ports button")
+    print(" >>> 3. Follow the instructions that show up here")
+
+# -------------------------------- event loop -------------------------------- #
+
     while True:
         event, values = window.Read()
-        # popups_enabled = values['_TOGGLEPOPUPALL_']
-# // ! why is popups_enabled in both 739 and 672??? ##################################################################
-        #
-        # if values['_TOGGLEPOPUPALL_'] == False:
-        #     popups_enabled
+
         if event in (None, 'Exit'):
             #if ser.is_open:
             ser.close()
             # keeplog(ff1_log)
             break
-
+                
 # ------------------------------ showing graphs ------------------------------ #
 
         # if event == '_HRGRAPH1_':
@@ -771,21 +847,21 @@ def main():
                 elif file_update_ff1:
                     popups_enabled = values['_TOGGLEPOPUPALL_']
                     try:
-                        time.sleep(.01)
+                        # time.sleep(.01)
                         # createLogFile('ff1.log')
                         ff1_list = serialToList(ser)
                         ff1_hr_list = ff1_list[-2]
-                        print(ff1_list)
-                        print(ff1_hr_list)
+                        # print(ff1_list)
+                        # print(ff1_hr_list)
                         df1 = listToDataFrame(ff1_list)
                         logAllData(df1, ff1_logfile)
-
+                        # print(df1)
 
                         # keeplog(ff1_log)
 
                         # ff1_hr_graph_list =
                         motor_status_1 = df1['motor'].iloc[0]
-                        last_row_display_1h = df1['heartrate'].iloc[0]
+                        ff1_heartrate = df1['heartrate'].iloc[0]
                         window['_HRTEXT1_'].Update(df1['heartrate'].iloc[0])
 
     # ------------------------------- FF1 hr graph ------------------------------- #
@@ -821,7 +897,8 @@ def main():
 
                         #         # Read temperature (Celsius) from TMP102
                         #         #temp_c = round(tmp102.read_temp(), 2)
-                        #         hr = int(ff1_list[-2])
+                        #         # hr = int(ff1_list[-2])
+                        #         hr = round(ff1_list[-2])
                         #         # hr = ff1_hr_list
                         #         # Add y to list
                         #         ys.append(hr)
@@ -853,29 +930,33 @@ def main():
                             pass
 
     # ---------------------------- update motor status --------------------------- #
-    #! cant test yet, may need to try motor_status_1.item()
+
                         if motor_status_1 != 0:
                             try:
                                 if motor_status_1 == 1:
-                                    motorWarningPopup('Heart Rate')
-                                    break
+                                    # motorWarningPopup('Heart Rate')
+                                    print('There is an error with the heart rate sensor')
+                                    pass
                                 elif motor_status_1 == 2:
-                                    motorWarningPopup('Temperature')
-                                    break
+                                    # motorWarningPopup('Temperature')
+                                    print('There is an error with the temperature sensor')
+                                    pass
                                 elif motor_status_1 == 3:
-                                    motorWarningPopup('Heart Rate', 'Temperature')
-                                    break
+                                    # motorWarningPopup('Heart Rate', 'Temperature')
+                                    print('There is an error with the heart rate and temperature sensors')
+                                    pass
                             except:
                                 pass
                         else:
                             pass
-    # --------------    ------------------- FF1heartrate -------------------------------- #
 
-                        FF1_HR_UPPER = 230
+    # --------------------------------- FF1heartrate -------------------------------- #
+
+                        FF1_HR_UPPER = 182
                         FF1_HR_LOWER = 40
-                        FF1_HR_CAUTION = 210
+                        FF1_HR_CAUTION = 130
 
-                        if  last_row_display_1h.item() <= FF1_HR_LOWER or last_row_display_1h.item() >= FF1_HR_UPPER:
+                        if  ff1_heartrate.item() <= FF1_HR_LOWER or ff1_heartrate.item() >= FF1_HR_UPPER:
                             setLEDStatus(window, '_FF1HRLED_', '_TABDEFAULTFF1HRLED_', 'red')
 
                             if not popups_enabled:
@@ -883,22 +964,25 @@ def main():
                             else:
                                 statusWarningPopup('FF1','Heart Rate', 'firebrick')
 
-                        elif FF1_HR_CAUTION < last_row_display_1h.item() < FF1_HR_UPPER:
+                        elif FF1_HR_CAUTION < ff1_heartrate.item() < FF1_HR_UPPER:
                             setLEDStatus(window, '_FF1HRLED_', '_TABDEFAULTFF1HRLED_', 'orange')
 
                         else:
                             setLEDStatus(window, '_FF1HRLED_', '_TABDEFAULTFF1HRLED_', 'green')
 
-    # --------------    ------------------- FF1movement --------------------------------- #
+    # --------------------------------- FF1movement --------------------------------- #
 
-                        last_row_display_1m = df1['movement'].iloc[0]
+                        ff1_movement = df1['movement'].iloc[0]
                         window['_MOVTEXT1_'].Update(df1['movement'].iloc[0])
 
-                        FF1_MOV_UPPER = 9.8
-                        FF1_MOV_LOWER = 0.1
+                        # FF1_MOV_UPPER = 9.8
+                        # FF1_MOV_LOWER = 0.1
                         #FF1_MOV_CAUTION = 0.65
-
-                        if  last_row_display_1m.item() <= FF1_MOV_LOWER or last_row_display_1m.item() >= FF1_MOV_UPPER:
+                        FF1_MOV_UPPER = 1
+                        FF1_MOV_LOWER = 0
+                        
+                        # if  ff1_movement.item() <= FF1_MOV_LOWER or ff1_movement.item() >= FF1_MOV_UPPER:
+                        if  ff1_movement == FF1_MOV_UPPER:
                             setLEDStatus(window, '_FF1MOVLED_', '_TABDEFAULTFF1MOVLED_', 'red')
                             window['_MOVWARN1_'].Update('Low movement')
 
@@ -915,18 +999,18 @@ def main():
 
                         else:
                             setLEDStatus(window, '_FF1MOVLED_', '_TABDEFAULTFF1MOVLED_', 'green')
+                            window['_MOVWARN1_'].Update('No warnings')
 
-    # --------------    ------------------ FF1temperature ------------------------------- #
+    # -------------------------------- FF1temperature ------------------------------- #
 
-
-                        last_row_display_1t = df1['temp'].iloc[-1]
-                        window['_TEMPTEXT1_'].Update(last_row_display_1t)
+                        ff1_temperature = df1['temp'].iloc[-1]
+                        window['_TEMPTEXT1_'].Update(ff1_temperature)
 
                         FF1_TEMP_UPPER = 500
                         #FF1_TEMP_LOWER = 10
                         FF1_TEMP_CAUTION = 400
 
-                        if  last_row_display_1t.item() > FF1_TEMP_UPPER:
+                        if  ff1_temperature.item() > FF1_TEMP_UPPER:
                             setLEDStatus(window, '_FF1TEMPLED_', '_TABDEFAULTFF1TEMPLED_', 'red')
                             window['_TEMPWARN1_'].Update('High Temperature')
 
@@ -935,7 +1019,7 @@ def main():
                             else:
                                 statusWarningPopup('FF1','Temperature', 'orangered')
 
-                        elif FF1_TEMP_CAUTION < last_row_display_1t.all() < FF1_TEMP_UPPER:
+                        elif FF1_TEMP_CAUTION < ff1_temperature.all() < FF1_TEMP_UPPER:
                             setLEDStatus(window, '_FF1TEMPLED_', '_TABDEFAULTFF1TEMPLED_', 'orange')
                             window['_TEMPWARN1_'].Update('Moderate Temperature')
 
@@ -943,59 +1027,63 @@ def main():
                             setLEDStatus(window, '_FF1TEMPLED_', '_TABDEFAULTFF1TEMPLED_', 'green')
                             window['_TEMPWARN1_'].Update('No warnings')
 
+    # -------------------------- plotting ff1 heart rate ------------------------- #
 
-                        if event == '_PLOTHR1_':            # ! try creating a window for this process like the old cmd window
-                            # showHrGraph(ff1_list)
+                        if event == '_PLOTHR1_':
+                            try:            # ! try creating a window for this process like the old cmd window
+                                # showHrGraph(ff1_list)
 
-                            # Parameters
-                            # popups_enabled=False
-                            x_len = 200         # Number of points to display
-                            y_range = [0, 250]  # Range of possible Y values to display
+                                # Parameters
+                                # popups_enabled=False
+                                x_len = 400         # Number of points to display
+                                # y_range = [0, 250]  # Range of possible Y values to display
+                                y_range = [0,200]     #! temporary range of y values b/c hr sensor is not working
+                                # Create figure for plotting
+                                fig = plt.figure()
+                                ax = fig.add_subplot(1, 1, 1)
+                                xs = list(range(0, 400))
+                                ys = [0] * x_len
+                                ax.set_ylim(y_range)
+                                # ser.flushInput()
+                                # Initialize communication with TMP102
+                                #tmp102.init()
 
-                            # Create figure for plotting
-                            fig = plt.figure()
-                            ax = fig.add_subplot(1, 1, 1)
-                            xs = list(range(0, 200))
-                            ys = [0] * x_len
-                            ax.set_ylim(y_range)
+                                # Create a blank line. We will update the line in animate
+                                line, = ax.plot(xs, ys)
 
-                            # Initialize communication with TMP102
-                            #tmp102.init()
+                                # Add labels
+                                plt.title('Heart Rate Over Time')
+                                plt.xlabel('Samples')
+                                plt.ylabel('HR (BPM)')
 
-                            # Create a blank line. We will update the line in animate
-                            line, = ax.plot(xs, ys)
+                                # This function is called periodically from FuncAnimation
+                                def animate(i, ys):
 
-                            # Add labels
-                            plt.title('Heart Rate Over Time')
-                            plt.xlabel('Samples')
-                            plt.ylabel('HR (BPM)')
+                                    # Read temperature (Celsius) from TMP102
+                                    #temp_c = round(tmp102.read_temp(), 2)
+                                    # hr = int(ff1_list[-2])
+                                    hr = ff1_hr_list
+                                    # Add y to list
+                                    ys.append(hr)
 
-                        # This function is called periodically from FuncAnimation
-                            def animate(i, ys):
+                                    # Limit y list to set number of items
+                                    ys = ys[-x_len:]
 
-                                # Read temperature (Celsius) from TMP102
-                                #temp_c = round(tmp102.read_temp(), 2)
-                                hr = int(ff1_list[-2])
-                                # hr = ff1_hr_list
-                                # Add y to list
-                                ys.append(hr)
+                                    # Update line with new Y values
+                                    line.set_ydata(ys)
 
-                                # Limit y list to set number of items
-                                ys = ys[-x_len:]
+                                    return line,
 
-                                # Update line with new Y values
-                                line.set_ydata(ys)
-
-                                return line,
-
-                        # below is function call
-                        # Set up plot to call animate() function periodically
-                            ani = animation.FuncAnimation(fig,
-                                animate,
-                                fargs=(ys,),
-                                interval=50,
-                                blit=True)
-                            plt.show(block=False)
+                                # below is function call
+                                # Set up plot to call animate() function periodically
+                                ani = animation.FuncAnimation(fig,
+                                    animate,
+                                    fargs=(ys,),
+                                    interval=100,
+                                    blit=True)
+                                plt.show(block=False)
+                            except:
+                                break
                         else:
                             pass
 
@@ -1237,10 +1325,9 @@ def main():
                             ser.close()
                             pass
                     except:
-                        porterror()
+                        portError()
             except:
-                porterror()
-
+                portError()
 
 # ------------------------------- menu choices ------------------------------- #
 
@@ -1271,7 +1358,6 @@ def main():
         elif event == 'Open':
             filename = sg.PopupGetFile('file to open', no_window=True)
             print(filename)
-
 
 # ---------------------------------- way out --------------------------------- #
 
