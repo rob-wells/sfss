@@ -1,6 +1,4 @@
 pandas==0.25.1
-numpy==1.16.5
 matplotlib==3.0.3
-PySimpleGUI==4.6.0
-PySimpleGUI27==2.4.1
+PySimpleGUI==4.8.0
 pyserial==3.4
